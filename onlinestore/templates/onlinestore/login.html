@@ -1,0 +1,36 @@
+{%load static%}
+{% block content%}
+<head>
+  <link rel="stylesheet" href="{% static 'css/mainpage.css'%}">
+</head>
+<div class="login-box">
+  <div class="message">
+    {%for msg in messages%}
+    {{msg}}
+    {%endfor%}
+  </div>
+
+  <h2>Login</h2>
+  <form action="" method="post">
+    {%csrf_token%}
+    <div class="user-box">
+      <input type="text" name="username" id="username" required="">
+      <label>Username</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="password" id="password" required="">
+      <label>Password</label>
+    </div>
+    <p class="signup">Dont have an account ?<a href="{% url 'signup'%}">Signup</a></p>
+
+      <input type="submit" class="input" value="Login">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+ 
+  </form>
+</div>
+
+{% endblock%}

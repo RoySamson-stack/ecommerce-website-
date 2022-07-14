@@ -1,0 +1,54 @@
+
+
+{%load static%}
+{% block content%}
+<head>
+  <link rel="stylesheet" href="{% static 'css/mainpage.css'%}">
+</head>
+<div class="login-box">
+  <div class="message">
+    {%for msg in messages%}
+    {{msg}}
+    {%endfor%}
+  </div>
+  <h2>Signup</h2>
+  <!-- <form class="" action="" method="post">
+    {%csrf_token%}
+    {{form.as_table}}
+<input type="submit" name="submit" value="Signup">
+  </form> -->
+  <form action="" method="post">
+    {%csrf_token%}
+    <div class="user-box">
+      {{form.first_name}}
+      <label>first name</label>
+    </div>
+    <div class="user-box">
+      {{form.username}}
+      <label>Username</label>
+    </div>
+    <div class="user-box">
+      {{form.email}}
+      <label>Email</label>
+    </div>
+    <div class="user-box">
+     {{form.password1}}
+      <label>Password</label>
+    </div>
+    <div class="user-box">
+      {{form.password2}}
+      <label>Confirm Password</label>
+    </div>
+    <p class="signup">Already have an account ?<a href="{% url 'login'%}">login</a></p>
+
+      <input type="submit" class="input" value="Signup">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    
+  </form>
+</div>
+
+{% endblock%} 
