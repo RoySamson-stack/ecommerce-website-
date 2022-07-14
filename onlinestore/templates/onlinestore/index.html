@@ -29,6 +29,8 @@
 
     <!-- Responsive CSS -->
     <link href="{%static 'css/responsive.css'%}" rel="stylesheet">
+     
+ 
     <script type="text/javascript" >
         var user = '{{request.customer}}';
         
@@ -162,7 +164,7 @@
                             <div class="top_single_area d-flex align-items-center">
                                 <!-- Logo Area -->
                                 <div class="top_logo">
-                                    <a href="#"><img src="{% static 'img/core-img/logo.png'%}" alt=""></a>
+                                    <a href="#"><img src="static/img/core-img/logo.png" alt=""></a>
                                 </div>
                                 <!-- Cart & Menu Area -->
                                 <div class="header-cart-menu d-flex align-items-center ml-auto">
@@ -437,10 +439,10 @@
                             <button type="submit" 
                             data-product="{{product.id}}"
                             data-name="{{product.name}}"
-                            data-price="{{product.price}}"
+                            data-price="{{product.price}}" 
                             data-image="{{product.image.url}}"
                             data-action="add"
-                            class="add-to-cart-btn shop-item-button update-cart"  >ADD TO CART</button>
+                            class="add-to-cart-btn shop-item-button update-cart" >ADD TO CART</button>
                         </div>
                     </div>
                     {% endfor %}
@@ -539,20 +541,18 @@
         <!-- ****** Footer Area End ****** -->
     </div>
     <!-- /.wrapper end -->
-
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
-    <script src="{%static 'js/jquery/jquery-2.2.4.min.js'%}"></script>
-    <!-- Popper js -->
-    <script src="{%static 'js/popper.min.js'%}"></script>
-    <!-- Bootstrap js -->
-    <script src="{%static 'js/bootstrap.min.js'%}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <!-- Plugins js -->
-    <script src="{%static 'js/plugins.js'%}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
     <!-- Active js -->
-    <script src="{%static 'js/active.js'%}"></script>
+    <script src="{% static 'js/active.js' %}"></script>
     <!--Cart js -->
-    <script src="{%static 'js/cart.js'%}"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
 
+   
 </body>
 
 </html>
