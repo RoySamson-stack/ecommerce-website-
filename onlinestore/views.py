@@ -124,3 +124,5 @@ def cart(request):
     return render(request, 'onlinestore/cart.html', context)
 
 
+def checkout(request):
+    return render(request, 'onlinestore/checkout.html')
