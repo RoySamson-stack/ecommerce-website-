@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 import json 
 from .forms import CreateUserForm, LoginForm
+import uuid 
 
 
 # Create your views here.
@@ -71,32 +72,24 @@ def cart(request):
     return render(request, 'onlinestore/cart.html')
 
 
-
-def updateItem(request):
-    data = json.loads(request.body)
-    productId = data['productId']
-    action = data['action']
-    print('Action:', action)
-    print('Product:', productId)
-
-    customer = request.user.customer
-    product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
-
+#create the add to cart view 
+def add_to_cart(request, id):
+    product = Product.objects.get(id=id)
+    order, created = Cart.objects.get_or_create( purchase_complete=False)
+    orderItem, created = CartItems.objects.get_or_create(product=product,)
     orderItem.save()
+    return redirect('cart')
 
-    if orderItem.quantity <= 0:
-        orderItem.delete()
+def remove_from_cart(request, id):
+    customer = request.user.username
+    product = Product.objects.get(id=id)
+    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+    orderItem, created = CartItem.objects.get_or_create(product=product, order=order)
+    orderItem.delete()
+    return redirect('cart')
 
-    return JsonResponse('Item was added', safe=False)
-
+# def checkout(request):
+#     shipping_address = 
 
 def products(request):
     products = Product.objects.all()

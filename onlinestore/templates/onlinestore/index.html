@@ -314,7 +314,7 @@
                 </div>
             </div>
             <!-- Single Catagory -->
-            <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(static/img/bg-img/bg-3.jpg);">
+            <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(./static/img/bg-img/bg-3.jpg);">
                 <div class="catagory-content">
                     <h6>in Bags excepting the new collection</h6>
                     <h2>Designer bags</h2>
@@ -436,12 +436,7 @@
                             <a href="{%url  'product_view' product.id%}">View Full Product Details</a>
 
                             <!-- Add to Cart -->
-                            <button type="submit" 
-                            data-product="{{product.id}}"
-                            data-name="{{product.name}}"
-                            data-price="{{product.price}}" 
-                            data-image="{{product.image.url}}"
-                            data-action="add"
+                            <a href="{% url 'add_to_cart' product.id %}"
                             class="add-to-cart-btn shop-item-button update-cart" >ADD TO CART</button>
                         </div>
                     </div>

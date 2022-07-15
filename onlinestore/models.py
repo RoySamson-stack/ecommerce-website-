@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import uuid 
 
 # Create your models here.
 class Customer(models.Model):
@@ -54,9 +55,9 @@ class Product(models.Model):
    
 #cart model          
 class Cart(models.Model):
-  customer = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+  customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
   purchase_complete = models.BooleanField(default=False)
-  transaction_id = models.CharField(max_length=200, null=True)
+  transaction_id = models.UUIDField(default=uuid.uuid4, null=True)
   order_date = models.DateTimeField(auto_now_add=True, null=True)
    
    
