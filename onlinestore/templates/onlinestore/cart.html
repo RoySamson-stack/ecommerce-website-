@@ -190,7 +190,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    {%for item in items%}
                                     <tr>
                                         <td class="cart_product_img d-flex align-items-center">
                                             <a href="#"><img src="{{product.image.url}}" alt="Product"></a>
@@ -206,6 +206,7 @@
                                         </td>
                                         <td class="total_price"><span></span></td>
                                     </tr>
+                                    {%endfor%}
                                 </tbody>
                             </table>
                         </div>

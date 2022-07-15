@@ -55,6 +55,7 @@ class Product(models.Model):
    
 #cart model          
 class Cart(models.Model):
+  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
   purchase_complete = models.BooleanField(default=False)
   transaction_id = models.UUIDField(default=uuid.uuid4, null=True)

@@ -68,8 +68,11 @@ def product_view(request, id):
 
 
 
-def cart(request):
-    return render(request, 'onlinestore/cart.html')
+def cart(request, id):
+    context = {
+        'items': CartItems.objects.get(id=id)
+    }
+    return render(request, 'onlinestore/cart.html', context)
 
 
 #create the add to cart view 
@@ -127,3 +130,10 @@ def updateItem(request):
         orderItem.delete()
         
     return JsonResponse('Item was added to cart', safe=False)       
+
+
+#create the checkout view 
+def checkout(request):
+    #read the cart data from the cartFuct
+    
+    return render(request, 'onlinestore/checkout.html')
