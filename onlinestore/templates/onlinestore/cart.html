@@ -107,23 +107,9 @@
                                 <div class="header-cart-menu d-flex align-items-center ml-auto">
                                     <!-- Cart Area -->
                                     <div class="cart">
-                                        <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">0</span>0<i class="ti-bag"></i></a>
+                                        <a href="{%url 'cart'%}" id="header-cart-btn" target="_blank"><span class="cart_quantity">{{item_count}}</span>0<i class="ti-bag"></i></a>
                                         <!-- Cart List Area Start -->
-                                        <ul class="cart-list">
-                                            <li>
-                                                <a href="#" class="image"><img src="{%static 'img/product-img/product-11.jpg'%}" class="cart-thumb" alt=""></a>
-                                                <div class="cart-item-desc">
-                                                    <h6><a href="#">Women's Fashion</a></h6>
-                                                    <p>1x - <span class="price">$10</span></p>
-                                                </div>
-                                                <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
-                                            </li>
-                                            <li class="total">
-                                                <span class="pull-right">Total: $20.00</span>
-                                                <a href="{%url 'cart'%}" class="btn btn-sm btn-cart">Cart</a>
-                                                <a href="checkout-1.html" class="btn btn-sm btn-checkout">Checkout</a>
-                                            </li>
-                                        </ul>
+                                      
                                     </div>
                                     <div class="header-right-side-menu ml-15">
                                         <a href="#" id="sideMenuBtn"><i class="ti-menu" aria-hidden="true"></i></a>
@@ -204,7 +190,7 @@
                                                 <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                             </div>
                                         </td>
-                                        <td class="total_price"><span>{{cartItem.get_cart_total}}</span></td>
+                                        <td class="total_price"><span>{{cartItem.total}}</span></td>
                                     </tr>
                                     {%endfor%}
                                 </tbody>

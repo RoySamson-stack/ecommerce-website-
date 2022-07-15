@@ -116,8 +116,10 @@ def cart(request):
     customer = request.user.username
     order, created = Cart.objects.get_or_create(purchase_complete=False)
     cartItems = CartItems.objects.filter(cart=order)
+    item_count = cartItems.count()
     context = {
         'cartItems': cartItems,
+        'item_count': item_count
     }
     return render(request, 'onlinestore/cart.html', context)
 
