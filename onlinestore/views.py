@@ -17,6 +17,9 @@ from .utils import cookieCart, cartData, guestOrder
 def index(request):
     products = Product.objects.all()
    #get cart data from cartData
+    order = Cart.objects.get(purchase_complete=False)
+    cartItems = CartItems.objects.filter(cart=order)
+    item_count = cartItems.count()
    
     data = {
             'products': products[0:6]
@@ -125,4 +128,6 @@ def cart(request):
 
 
 def checkout(request):
+    #get the customer input data from the form for checkout 
+    
     return render(request, 'onlinestore/checkout.html')
