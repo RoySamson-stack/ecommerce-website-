@@ -190,13 +190,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {%for item in items%}
+                                    {%for cartItem in cartItems%}
                                     <tr>
                                         <td class="cart_product_img d-flex align-items-center">
-                                            <a href="#"><img src="{{product.image.url}}" alt="Product"></a>
-                                            <h6>{{product.name}}</h6>
+                                            <a href="#"><img src="{{cartItem.product.image.url}}" alt="Product"></a>
+                                            <h6>{{cartItem.product.name}}</h6>
                                         </td>
-                                        <td class="price"><span>{{product.price}}</span></td>
+                                        <td class="price"><span>{{cartItem.product.price}}</span></td>
                                         <td class="qty">
                                             <div class="quantity">
                                                 <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
@@ -204,7 +204,7 @@
                                                 <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                             </div>
                                         </td>
-                                        <td class="total_price"><span></span></td>
+                                        <td class="total_price"><span>{{cartItem.get_cart_total}}</span></td>
                                     </tr>
                                     {%endfor%}
                                 </tbody>
@@ -213,10 +213,10 @@
 
                         <div class="cart-footer d-flex mt-30">
                             <div class="back-to-shop w-50">
-                                <a href="shop-grid-left-sidebar.html">Continue shopping</a>
+                                <a href="{%url 'products'%}">Continue shopping</a>
                             </div>
                             <div class="update-checkout w-50 text-right">
-                                <a href="#">clear cart</a>
+                                <a href="{%url 'clear_cart'%}">clear cart</a>
                                 <a href="#">Update cart</a>
                             </div>
                         </div>

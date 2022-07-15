@@ -1,9 +1,5 @@
-
 {%load static%}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
@@ -32,7 +28,7 @@
      
  
     <script type="text/javascript" >
-        var user = '{{request.customer}}';
+        var user = '{{request.user.username}}';
         
         function getToken(name) {
 		    var cookieValue = null;
@@ -164,7 +160,7 @@
                             <div class="top_single_area d-flex align-items-center">
                                 <!-- Logo Area -->
                                 <div class="top_logo">
-                                    <a href="#"><img src="static/img/core-img/logo.png" alt=""></a>
+                                    <a href="#"><img src="{%static '/img/core-img/logo.png'%}" alt=""></a>
                                 </div>
                                 <!-- Cart & Menu Area -->
                                 <div class="header-cart-menu d-flex align-items-center ml-auto">
@@ -220,15 +216,9 @@
                                     <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
                                         <ul class="navbar-nav animated" id="nav">
                                             <li class="nav-item active"><a class="nav-link" href="{%url 'index'%">Home</a></li>
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Home</a>
-                                                    <a class="dropdown-item" href="{%url 'products'%}">Shop</a>
-                                                    <a class="dropdown-item" href="{%url 'cart'%}">Cart</a>
-                                                    <!-- <a class="dropdown-item" href="checkout.html">Checkout</a> -->
-                                                </div>
-                                            </li>
+                                            <li class="nav-item active"><a class="nav-link" href="{%url 'cart'%">Cart</a></li>
+                                            <li class="nav-item active"><a class="nav-link" href="{%url 'products'%">Products</a></li>
+
                                             {%if user.is_authenticated%}
                                                 <li class="nav-item"><a class="nav-link" href="#profile">{{user.username}}</a></li>
                                                 <li class="nav-item"><a class="nav-link" href="{%url 'logout'%}">Logout</a></li>
@@ -434,10 +424,8 @@
                             <h4 class="product-price shop-item-price">{{product.price}}</h4>
                             <p class="shop-item-title">{{product.name}}</p>
                             <a href="{%url  'product_view' product.id%}">View Full Product Details</a>
-
                             <!-- Add to Cart -->
-                            <a href="{% url 'add_to_cart' product.id %}"
-                            class="add-to-cart-btn shop-item-button update-cart" >ADD TO CART</button>
+                            <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart-btn shop-item-button add-btn" >ADD TO CART</a>
                         </div>
                     </div>
                     {% endfor %}
@@ -537,7 +525,7 @@
     </div>
     <!-- /.wrapper end -->
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
-    <script src="{%static 'js/jquery/jquery-2.2.4.min.js'%}"></script>
+    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
     <!-- Popper js -->
     <script src="{%static 'js/popper.min.js'%}"></script>
     <!-- Bootstrap js -->
@@ -551,6 +539,4 @@
 
    
 </body>
-
-</html>
 {% endblock %}

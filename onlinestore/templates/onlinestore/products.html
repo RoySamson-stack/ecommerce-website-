@@ -19,6 +19,7 @@
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="{%static 'css/core-style.css'%}">
     <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'css/mainpage.css'%}">
 
     <!-- Responsive CSS -->
     <link href="{%static 'css/responsive.css'%}" rel="stylesheet">
@@ -419,10 +420,9 @@
                                     <!-- Product Description -->
                                     <div class="product-description">
                                         <h4 class="product-price">{{product.price}}</h4>
-                                        <p>{{product.name}}</p>
+                                        <p class="shop-item-title"> {{product.name}}</p>
                                         <!-- Add to Cart -->
-                                        <button type="submit" data-product="{{product.id}}" data-action="add" class="add-to-cart-btn update-cart">ADD TO CART</a>
-                                    </div>
+                                        <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart-btn shop-item-button add-btn" >ADD TO CART</a>                                    </div>
                                 </div>
                                 {%endfor%}
                             </div>

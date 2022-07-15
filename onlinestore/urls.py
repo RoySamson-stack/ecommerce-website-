@@ -12,9 +12,10 @@ urlpatterns = [
   path('login/', views.login_view, name='login'),
   path("signup/", views.signup, name="signup"),
   path("logout/", views.logout_view, name="logout"),
-  path('cart/', views.cart, name='cart'),#return the login required 
+  path('cart/', login_required(views.cart), name='cart'),
   path('cart/add/<int:id>', views.add_to_cart, name='add_to_cart'),
+  path('remove_item/<int:id>/', views.remove_from_cart, name='remove_cart_item'),
+  path('cart/clear', views.clear_cart, name='clear_cart'),
   path('products/', views.products, name='products'),
   path('product/<int:id>/', views.product_view, name='product_view'),
-  path('update_item/',views.updateItem, name='update-item'),
 ]

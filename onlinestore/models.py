@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
-import uuid 
+import uuid
+from dataclasses import dataclass, Field
+
+
+
 
 # Create your models here.
 class Customer(models.Model):
@@ -55,10 +59,9 @@ class Product(models.Model):
    
 #cart model          
 class Cart(models.Model):
-  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
   purchase_complete = models.BooleanField(default=False)
-  transaction_id = models.UUIDField(default=uuid.uuid4, null=True)
+  transaction_id = models.CharField(max_length=200, null=True)
   order_date = models.DateTimeField(auto_now_add=True, null=True)
    
    
@@ -96,7 +99,7 @@ class  CartItems(models.Model):
   cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
   product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
   is_ordered = models.BooleanField(default=False)
-  quantity = models.IntegerField(null=True)
+  quantity = models.IntegerField(default=1)
   date_created = models.DateTimeField(auto_now_add=True, null=True)
 
   

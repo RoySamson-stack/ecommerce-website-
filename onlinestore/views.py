@@ -10,7 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 import json 
 from .forms import CreateUserForm, LoginForm
-import uuid 
+from .utils import cookieCart, cartData, guestOrder
 
 
 # Create your views here.
@@ -58,7 +58,20 @@ def signup(request):
    else:
          form = CreateUserForm()
          
-   return render(request, 'onlinestore/signup.html', {'form': form})                
+   return render(request, 'onlinestore/signup.html', {'form': form})    
+
+
+
+            
+def products(request):
+    products = Product.objects.all()
+    #get the cart data from the cart Fuct
+    
+    context = {
+        'products': products
+    }
+    return render(request, 'onlinestore/products.html', context)
+
 
 
 def product_view(request, id):
@@ -66,20 +79,12 @@ def product_view(request, id):
     return render(request, 'onlinestore/product_view.html', {'product': product})
 
 
-
-
-def cart(request, id):
-    context = {
-        'items': CartItems.objects.get(id=id)
-    }
-    return render(request, 'onlinestore/cart.html', context)
-
-
 #create the add to cart view 
 def add_to_cart(request, id):
     product = Product.objects.get(id=id)
+    # quantity = int(request.POST.get('quantity'))
     order, created = Cart.objects.get_or_create( purchase_complete=False)
-    orderItem, created = CartItems.objects.get_or_create(product=product,)
+    orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
     orderItem.save()
     return redirect('cart')
 
@@ -91,49 +96,29 @@ def remove_from_cart(request, id):
     orderItem.delete()
     return redirect('cart')
 
-# def checkout(request):
-#     shipping_address = 
 
-def products(request):
-    products = Product.objects.all()
-    #get the cart data from the cart Fuct
-    
-    context = {
-        'products': products
-    }
-    return render(request, 'onlinestore/products.html', context)
-
-#create the cart view 
-#find a way to push the cart content to the database then pull i ttp the frontend
-def updateItem(request):
-    data = json.loads(request.body)
-    productId = data['productId']
-    action = data['action']
-    print('Action:', action)
-    print('Product:', productId)
-    
+#create a view to clear cart 
+def clear_cart(request):
     customer = request.user.username
-    product = Product.objects.get(id=productId)
+    order, created = Cart.objects.get_or_create(purchase_complete=False)
+    cartItems = CartItems.objects.filter(cart=order)
+    cartItems.delete()
+    return redirect('cart')    
     
-    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
-    orderItem , created = CartItem.objects.get_or_create(product=product, order=order)
     
     
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1) 
-        
-    orderItem.save()
     
-    if orderItem.quantity <= 0:
-        orderItem.delete()
-        
-    return JsonResponse('Item was added to cart', safe=False)       
+    
+    
+    
+#create the cart view
+def cart(request):
+    customer = request.user.username
+    order, created = Cart.objects.get_or_create(purchase_complete=False)
+    cartItems = CartItems.objects.filter(cart=order)
+    context = {
+        'cartItems': cartItems,
+    }
+    return render(request, 'onlinestore/cart.html', context)
 
 
-#create the checkout view 
-def checkout(request):
-    #read the cart data from the cartFuct
-    
-    return render(request, 'onlinestore/checkout.html')
