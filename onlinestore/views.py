@@ -48,6 +48,7 @@ def logout_view(request):
     return redirect('login')
 
 def signup(request):
+   username=''
    form = CreateUserForm()
    if request.method == 'POST':
          form = CreateUserForm(request.POST)
@@ -57,7 +58,14 @@ def signup(request):
             messages.success(request, 'Account created successfully')     
    else:
          form = CreateUserForm()
-         
+   try :
+        user = User.objects.get(username=username)
+        context = {'form': form, 'user': user, 'error_message': 'Username already exists'}
+        messages.error(request, 'Username has already been taken')
+        return render(request, 'onlinestore/signup.html', context)
+   except User.DoesNotExist:
+        context = {'form': form}
+        return render(request, 'onlinestore/signup.html', context)     
    return render(request, 'onlinestore/signup.html', {'form': form})    
 
 
@@ -86,13 +94,17 @@ def cart_id(request):
 
 
 #create the add to cart view 
-def add_to_cart(request, id):
+def add_to_cart(request, id, quantity=0):
     customer = request.user
-    #check if cart exist if it doesnt create one
     product = Product.objects.get(id=id)
     order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
     orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
-    orderItem.save()
+    if orderItem is not None:
+        quantity += 1
+        orderItem.save()
+    else:    
+         orderItem.save()
+         
     return redirect('products')
 
 #create a view to clear cart 
@@ -117,7 +129,7 @@ def remove_cart_item(request, id):
 #create the cart view
 def cart(request):
     customer = request.user
-    order, created = Cart.objects.get_or_create(purchase_complete=False)
+    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
     cartItems = CartItems.objects.filter(cart=order)
     item_count = cartItems.count()
     context = {
@@ -128,8 +140,6 @@ def cart(request):
 
 #create a checkout view that will be used to create the order
 def checkout(request, id):
-    
-    
     customer = request.user
     order = Cart.objects.get(id=id)
     order.purchase_complete = True

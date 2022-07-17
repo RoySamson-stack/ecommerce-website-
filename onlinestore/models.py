@@ -90,10 +90,6 @@ class Cart(models.Model):
       total = sum([item.quantity for item in cartitems])
       return total 
 
-
-      
-    
-  
 #cart items model 
 class  CartItems(models.Model):
   #can use the uuid for the primary key

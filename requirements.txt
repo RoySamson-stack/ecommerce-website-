@@ -1,0 +1,10 @@
+asgiref==3.5.2
+backports.zoneinfo==0.2.1
+Django==4.0.5
+django-mathfilters==1.0.0
+gunicorn==20.1.0
+itertools-s==0.1
+Pillow==9.1.1
+pysqlite3-binary==0.4.6
+sqlparse==0.4.2
+whitenoise==6.2.0
