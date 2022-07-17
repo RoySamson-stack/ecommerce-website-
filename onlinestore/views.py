@@ -12,6 +12,8 @@ from .forms import CreateUserForm, LoginForm
 from .utils import cookieCart, cartData, guestOrder
 
 
+
+
 # Create your views here.
 def index(request):
     products = Product.objects.all()
@@ -75,31 +77,37 @@ def product_view(request, id):
     product = Product.objects.get(id=id)
     return render(request, 'onlinestore/product_view.html', {'product': product})
 
+def cart_id(request):
+    cart_id = request.session.get('cart_id', None)
+    if cart_id is None:
+        cart_id = uuid4().hex[:10]
+        request.session['cart_id'] = cart_id
+    return cart_id
+
 
 #create the add to cart view 
 def add_to_cart(request, id):
-    # if cart is None:
-    #     cart = Cart.objects.create(id=cart_id(request))
-    # elif cart:
-    #      cart = Cart.objects.get(id=cart_id(request))   
-         
+    customer = request.user
+    #check if cart exist if it doesnt create one
     product = Product.objects.get(id=id)
-    order, created = Cart.objects.get_or_create( purchase_complete=False)
+    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
     orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
     orderItem.save()
     return redirect('products')
 
 #create a view to clear cart 
 def clear_cart(request):
-    customer = request.user.username
+    customer = request.user
     order, created = Cart.objects.get_or_create(purchase_complete=False)
     cartItems = CartItems.objects.filter(cart=order)
     cartItems.delete()
     return redirect('cart')    
-    
+
+
+
 #remove cart item from cart using view
 def remove_cart_item(request, id):
-    customer = request.user.username
+    customer = request.user
     product = Product.objects.get(id=id)
     order, created = Cart.objects.get_or_create( purchase_complete=False)
     orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
@@ -108,7 +116,7 @@ def remove_cart_item(request, id):
 
 #create the cart view
 def cart(request):
-    customer = request.user.username
+    customer = request.user
     order, created = Cart.objects.get_or_create(purchase_complete=False)
     cartItems = CartItems.objects.filter(cart=order)
     item_count = cartItems.count()
@@ -119,9 +127,11 @@ def cart(request):
     return render(request, 'onlinestore/cart.html', context)
 
 #create a checkout view that will be used to create the order
-def checkout(request):
-    customer = request.user.username
-    order = Cart.objects.get(id=cart_id)
+def checkout(request, id):
+    
+    
+    customer = request.user
+    order = Cart.objects.get(id=id)
     order.purchase_complete = True
     order.save()
     cartItems = CartItems.objects.filter(cart=order)

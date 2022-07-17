@@ -8,6 +8,7 @@ from dataclasses import dataclass, Field
 
 # Create your models here.
 class Customer(models.Model):
+  user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
   first_name = models.CharField(max_length=200, null=True)
   username = models.CharField(max_length=200, null=True)
   email = models.CharField(max_length=200)
@@ -59,7 +60,7 @@ class Product(models.Model):
    
 #cart model          
 class Cart(models.Model):
-  customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
+  customer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
   purchase_complete = models.BooleanField(default=False)
   transaction_id = models.CharField(max_length=200, null=True)
   order_date = models.DateTimeField(auto_now_add=True, null=True)
@@ -115,7 +116,7 @@ class  CartItems(models.Model):
 #create the payment model 
 #delivery model 
 class Delivery(models.Model):
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     cart = models.ForeignKey(Cart, on_delete=models.SET_NULL, null=True)
     address = models.CharField(max_length=200, null=False)
     city = models.CharField(max_length=200, null=False)
