@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-#import request from django.http
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import  *
@@ -16,11 +15,7 @@ from .utils import cookieCart, cartData, guestOrder
 # Create your views here.
 def index(request):
     products = Product.objects.all()
-   #get cart data from cartData
-    order = Cart.objects.get(purchase_complete=False)
-    cartItems = CartItems.objects.filter(cart=order)
-    item_count = cartItems.count()
-   
+   #get cart data from cartData 
     data = {
             'products': products[0:6]
                 
@@ -69,7 +64,6 @@ def signup(request):
 def products(request):
     products = Product.objects.all()
     #get the cart data from the cart Fuct
-    
     context = {
         'products': products
     }
@@ -84,12 +78,16 @@ def product_view(request, id):
 
 #create the add to cart view 
 def add_to_cart(request, id):
+    # if cart is None:
+    #     cart = Cart.objects.create(id=cart_id(request))
+    # elif cart:
+    #      cart = Cart.objects.get(id=cart_id(request))   
+         
     product = Product.objects.get(id=id)
-    # quantity = int(request.POST.get('quantity'))
     order, created = Cart.objects.get_or_create( purchase_complete=False)
     orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
     orderItem.save()
-    return redirect('cart')
+    return redirect('products')
 
 #create a view to clear cart 
 def clear_cart(request):
@@ -116,12 +114,22 @@ def cart(request):
     item_count = cartItems.count()
     context = {
         'cartItems': cartItems,
-        'item_count': item_count
+        'item_count': item_count,
     }
     return render(request, 'onlinestore/cart.html', context)
 
-
+#create a checkout view that will be used to create the order
 def checkout(request):
-    #get the customer input data from the form for checkout 
-    
-    return render(request, 'onlinestore/checkout.html')
+    customer = request.user.username
+    order = Cart.objects.get(id=cart_id)
+    order.purchase_complete = True
+    order.save()
+    cartItems = CartItems.objects.filter(cart=order)
+    context = {
+        'cartItems': cartItems,
+        'order': order
+    }
+    return render(request, 'onlinestore/checkout.html', context)
+
+#create add to cart view using django and check if item is already in cart it just add the qunatity to the cart
+

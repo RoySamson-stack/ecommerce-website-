@@ -188,3 +188,16 @@ body {
 .message{
   color:red;
 }
+.dlt_btn{
+  color: white;
+  background-color: #ff084e;
+  width: 10px;
+  height: 10px;
+  padding: 5px;
+
+}
+.dlt_btn:hover{
+background-color: #fc4075;
+color:white;
+transform:scale(1.5);
+}

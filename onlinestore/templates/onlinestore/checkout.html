@@ -102,7 +102,9 @@
 
                             <ul class="order-details-form mb-4">
                                 <li><span>Product</span> <span>Total</span></li>
-                                <li><span>Cocktail Yellow dress</span> <span>$59.90</span></li>
+                                {%for cartItem in cartItems%}
+                                <li><span>{{cartItem.product.name}}</span> <span>{{cartItem.product.price}}</span></li>
+                                {%endfor%}
                                 <li><span>Subtotal</span> <span>$59.90</span></li>
                                 <li><span>Shipping</span> <span>Free</span></li>
                                 <li><span>Total</span> <span>$59.90</span></li>

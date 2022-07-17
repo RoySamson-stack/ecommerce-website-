@@ -12,7 +12,7 @@ urlpatterns = [
   path('login/', views.login_view, name='login'),
   path("signup/", views.signup, name="signup"),
   path("logout/", views.logout_view, name="logout"), 
-  path('cart/', login_required(views.cart, login_url="/login/"), name='cart'),
+  path('cart/', views.cart, name='cart'),
   path('cart/add/<int:id>', views.add_to_cart, name='add_to_cart'),
   path('cart/remove_item/<int:id>/', views.remove_cart_item, name='remove_cart_item'),
   path('cart/clear', views.clear_cart, name='clear_cart'),
