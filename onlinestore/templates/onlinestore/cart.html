@@ -33,6 +33,7 @@
                                             </div>
                                         </td>
                                         <td class="total_price"><span>{{cartItem.total}}</span></td>
+                                        <a href="{%url 'remove_cart_item' cartItem.product.id%}">Remove cart</a>
                                     </tr>
                                     {%endfor%}
                                 </tbody>
@@ -100,7 +101,7 @@
                                 <li><span>Shipping</span> <span>Free</span></li>
                                 <li><span><strong>Total</strong></span> <span><strong>$59.90</strong></span></li>
                             </ul>
-                            <a href="checkout.html" class="btn karl-checkout-btn">Proceed to checkout</a>
+                            <a href="{%url 'checkout'%}" class="btn karl-checkout-btn">Proceed to checkout</a>
                         </div>
                     </div>
                 </div>

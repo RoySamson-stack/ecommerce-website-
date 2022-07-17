@@ -91,15 +91,6 @@ def add_to_cart(request, id):
     orderItem.save()
     return redirect('cart')
 
-def remove_from_cart(request, id):
-    customer = request.user.username
-    product = Product.objects.get(id=id)
-    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
-    orderItem, created = CartItem.objects.get_or_create(product=product, order=order)
-    orderItem.delete()
-    return redirect('cart')
-
-
 #create a view to clear cart 
 def clear_cart(request):
     customer = request.user.username
@@ -108,12 +99,15 @@ def clear_cart(request):
     cartItems.delete()
     return redirect('cart')    
     
-    
-    
-    
-    
-    
-    
+#remove cart item from cart using view
+def remove_cart_item(request, id):
+    customer = request.user.username
+    product = Product.objects.get(id=id)
+    order, created = Cart.objects.get_or_create( purchase_complete=False)
+    orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+    orderItem.delete()
+    return redirect('cart')    
+
 #create the cart view
 def cart(request):
     customer = request.user.username
