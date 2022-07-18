@@ -100,10 +100,10 @@ def add_to_cart(request, id, quantity=0):
         product = Product.objects.get(id=id)
         order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
         orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
-        for orderItem in orderItems:
-            total += (int(orderItem.product.price) * int(orderItem.quantity))
+        for item in orderItem:
+            total += (int(item.product.price) * int(item.quantity))
         if orderItem is not None:
-            quantity += 1
+            orderItem.quantity += 1
             orderItem.save()
         else:    
             orderItem.save()
@@ -113,8 +113,6 @@ def add_to_cart(request, id, quantity=0):
         product = Product.objects.get(id=id)
         order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
         orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
-        for orderItem in orderItems:
-            total += (int(orderItem.product.price) * int(orderItem.quantity))
         if orderItem is not None:
             quantity += 1
             orderItem.save()
@@ -145,7 +143,7 @@ def remove_cart_item(request, id):
     orderItem.delete()
     return redirect('cart')
 
-def cart(request, total = 0, qunatity=0):
+def cart(request, total = 0, quantity=0):
     customer = request.user
     order = Cart.objects.filter(customer=customer, purchase_complete=False)
     cartItems = CartItems.objects.filter(cart__in=order)
@@ -155,6 +153,7 @@ def cart(request, total = 0, qunatity=0):
     context = {
         'cartItems': cartItems,
         'item_count': item_count,
+        # 'itemtotal': itemtotal,
         'total': total,
         # 'grandTotal': grandTotal
         
@@ -166,6 +165,7 @@ def checkout(request, total = 0):
     order = Cart.objects.filter(customer=customer)
     order.purchase_complete = True
     cartItems = CartItems.objects.filter(cart__in=order)
+    
     for item in cartItems:
         total += (int(item.product.price))
     context = {
@@ -175,4 +175,18 @@ def checkout(request, total = 0):
     }
     return render(request, 'onlinestore/checkout.html', context)
 
-
+#create the checkout success view 
+def checkout_success(request, total = 0):
+    customer = request.user
+    order = Cart.objects.filter(customer=customer)
+    order.purchase_complete = True
+    cartItems = CartItems.objects.filter(cart__in=order)
+    
+    for item in cartItems:
+        total += (int(item.product.price))
+    context = {
+        'cartItems': cartItems,
+        'order': order,
+        'total': total
+    }
+    return render(request, 'onlinestore/checkout_success.html', context)
