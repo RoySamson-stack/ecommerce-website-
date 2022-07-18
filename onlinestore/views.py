@@ -10,6 +10,7 @@ from django.contrib.auth import login, authenticate, logout
 import json 
 from .forms import CreateUserForm, LoginForm
 from .utils import cookieCart, cartData, guestOrder
+from django.db.models import F, Sum
 
 
 
@@ -93,31 +94,36 @@ def cart_id(request):
     return cart_id
 
 
-#create the add to cart view 
 def add_to_cart(request, id, quantity=0):
     if request.user.is_anonymous:
         customer = None 
         product = Product.objects.get(id=id)
         order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
         orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+        for orderItem in orderItems:
+            total += (int(orderItem.product.price) * int(orderItem.quantity))
         if orderItem is not None:
             quantity += 1
             orderItem.save()
         else:    
             orderItem.save()
+        context = {'orderItem': orderItem, 'quantity': quantity} 
     else:     
         customer = request.user
         product = Product.objects.get(id=id)
         order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
         orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+        for orderItem in orderItems:
+            total += (int(orderItem.product.price) * int(orderItem.quantity))
         if orderItem is not None:
             quantity += 1
             orderItem.save()
         else:    
-            orderItem.save()      
+            orderItem.save() 
+        context = {'orderItem': orderItem, 'quantity': quantity}   
+         
     return redirect('products')
 
-#create a view to clear cart 
 def clear_cart(request):
     customer = request.user
     order, created = Cart.objects.get_or_create(purchase_complete=False)
@@ -126,8 +132,11 @@ def clear_cart(request):
     return redirect('cart')    
 
 
+# def update_cart(request):
+#     customer = request.user
+#     order = Cart.objects.filter(customer=customer)
 
-#remove cart item from cart using view
+    
 def remove_cart_item(request, id):
     customer = request.user
     product = Product.objects.get(id=id)
@@ -135,30 +144,35 @@ def remove_cart_item(request, id):
     orderItem = CartItems.objects.filter(product=product, cart__in=order)
     orderItem.delete()
     return redirect('cart')
-#create the cart view
 
-def cart(request):
+def cart(request, total = 0, qunatity=0):
     customer = request.user
     order = Cart.objects.filter(customer=customer, purchase_complete=False)
     cartItems = CartItems.objects.filter(cart__in=order)
     item_count = cartItems.count()
+    for item in cartItems:
+        total += (int(item.product.price))
     context = {
         'cartItems': cartItems,
         'item_count': item_count,
+        'total': total,
+        # 'grandTotal': grandTotal
+        
     }
     return render(request, 'onlinestore/cart.html', context)
 
-#create a checkout view that will be used to create the order
-def checkout(request):
+def checkout(request, total = 0):
     customer = request.user
     order = Cart.objects.filter(customer=customer)
     order.purchase_complete = True
     cartItems = CartItems.objects.filter(cart__in=order)
+    for item in cartItems:
+        total += (int(item.product.price))
     context = {
         'cartItems': cartItems,
-        'order': order
+        'order': order,
+        'total': total
     }
     return render(request, 'onlinestore/checkout.html', context)
 
-#create add to cart view using django and check if item is already in cart it just add the qunatity to the cart
 

@@ -45,27 +45,27 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="street_address">Address <span>*</span></label>
-                                        <input type="text" class="form-control mb-3" id="street_address" value="">
+                                        <input type="text" class="form-control mb-3" id="street_address" value=""  required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="postcode">Postcode <span>*</span></label>
-                                        <input type="text" class="form-control" id="postcode" value="">
+                                        <input type="text" class="form-control" id="postcode" value=""  required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="city">Town/City <span>*</span></label>
-                                        <input type="text" class="form-control" id="city" value="">
+                                        <input type="text" class="form-control" id="city" value="" required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="state">Province <span>*</span></label>
-                                        <input type="text" class="form-control" id="state" value="">
+                                        <input type="text" class="form-control" id="state" value="" required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="phone_number">Phone No <span>*</span></label>
-                                        <input type="number" class="form-control" id="phone_number" min="0" value="">
+                                        <input type="number" class="form-control" id="phone_number" min="0" value="" required>
                                     </div>
                                     <div class="col-12 mb-4">
                                         <label for="email_address">Email Address <span>*</span></label>
-                                        <input type="email" class="form-control" id="email_address" value="">
+                                        <input type="email" class="form-control" id="email_address" value="" required>
                                     </div>
 
                                     <div class="col-12">
@@ -96,9 +96,9 @@
                                 {%for cartItem in cartItems%}
                                 <li><span>{{cartItem.product.name}}</span> <span>{{cartItem.product.price}}</span></li>
                                 {%endfor%}
-                                <li><span>Subtotal</span> <span>$59.90</span></li>
+                                <li><span>Subtotal</span> <span>{{total}}</span></li>
                                 <li><span>Shipping</span> <span>Free</span></li>
-                                <li><span>Total</span> <span>$59.90</span></li>
+                                <li><span>Total</span> <span>{{total}}</span></li>
                             </ul>
 
 
@@ -223,6 +223,7 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AXD9m8TJ2wH0EaFG22KEKlWUooQawtVKrK4YfO45a-ogNz0c9h0FHlVoMW6BNrqdRKbmZp67GM6_Qg5o&currency=KES"></script>
 
     <script>
+        // var total = '{{order.get_cart_total}}'
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
 
@@ -231,7 +232,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '88.44'
+                            value: '88.00'
                         }
                     }]
                 });
