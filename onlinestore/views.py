@@ -95,16 +95,26 @@ def cart_id(request):
 
 #create the add to cart view 
 def add_to_cart(request, id, quantity=0):
-    customer = request.user
-    product = Product.objects.get(id=id)
-    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
-    orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
-    if orderItem is not None:
-        quantity += 1
-        orderItem.save()
-    else:    
-         orderItem.save()
-         
+    if request.user.is_anonymous:
+        customer = None 
+        product = Product.objects.get(id=id)
+        order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+        orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+        if orderItem is not None:
+            quantity += 1
+            orderItem.save()
+        else:    
+            orderItem.save()
+    else:     
+        customer = request.user
+        product = Product.objects.get(id=id)
+        order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+        orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+        if orderItem is not None:
+            quantity += 1
+            orderItem.save()
+        else:    
+            orderItem.save()      
     return redirect('products')
 
 #create a view to clear cart 
