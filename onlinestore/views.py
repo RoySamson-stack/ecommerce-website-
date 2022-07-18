@@ -121,16 +121,16 @@ def clear_cart(request):
 def remove_cart_item(request, id):
     customer = request.user
     product = Product.objects.get(id=id)
-    order, created = Cart.objects.get_or_create( purchase_complete=False)
-    orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+    order = Cart.objects.filter( customer=customer)
+    orderItem = CartItems.objects.filter(product=product, cart__in=order)
     orderItem.delete()
-    return redirect('cart')    
-
+    return redirect('cart')
 #create the cart view
+
 def cart(request):
     customer = request.user
-    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
-    cartItems = CartItems.objects.filter(cart=order)
+    order = Cart.objects.filter(customer=customer, purchase_complete=False)
+    cartItems = CartItems.objects.filter(cart__in=order)
     item_count = cartItems.count()
     context = {
         'cartItems': cartItems,
@@ -141,7 +141,7 @@ def cart(request):
 #create a checkout view that will be used to create the order
 def checkout(request, id):
     customer = request.user
-    order = Cart.objects.get(id=id)
+    order = Cart.objects.get(cart_id=id)
     order.purchase_complete = True
     order.save()
     cartItems = CartItems.objects.filter(cart=order)
