@@ -109,20 +109,26 @@ class  CartItems(models.Model):
   
   
   
-#create the payment model 
-#delivery model 
-class Delivery(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
-    cart = models.ForeignKey(Cart, on_delete=models.SET_NULL, null=True)
-    address = models.CharField(max_length=200, null=False)
-    city = models.CharField(max_length=200, null=False)
-    county = models.CharField(max_length=200, null=False)
-    street = models.CharField(max_length=200, null=False)
-    phone = models.CharField(max_length=200, null=True)
-    date_added = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.address
+#create the checkout model 
+class Checkout(models.Model):
+  customer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+  order_date = models.DateTimeField(auto_now_add=True, null=True)
+  shipping_country = models.CharField(max_length=200, null=True)
+  shipping_address = models.CharField(max_length=200, null=True)
+  shipping_city = models.CharField(max_length=200, null=True)
+  shipping_zipcode = models.CharField(max_length=200, null=True)
+  shipping_county = models.CharField(max_length=200, null=True)
+  shipping_town = models.CharField(max_length=200, null=True)
+  payment_method = models.CharField(max_length=200, null=True)
+  payment_data = models.CharField(max_length=200, null=True)
+  payment_complete = models.BooleanField(default=False)
+  order_complete = models.BooleanField(default=False)
+  date_created = models.DateTimeField(auto_now_add=True, null=True)
+  date_updated = models.DateTimeField(auto_now=True, null=True)
+  
+  
+  def __str__(self):
+    return str(self.id)
     
   
   

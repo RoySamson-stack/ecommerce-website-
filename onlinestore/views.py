@@ -149,12 +149,11 @@ def cart(request):
     return render(request, 'onlinestore/cart.html', context)
 
 #create a checkout view that will be used to create the order
-def checkout(request, id):
+def checkout(request):
     customer = request.user
-    order = Cart.objects.get(cart_id=id)
+    order = Cart.objects.filter(customer=customer)
     order.purchase_complete = True
-    order.save()
-    cartItems = CartItems.objects.filter(cart=order)
+    cartItems = CartItems.objects.filter(cart__in=order)
     context = {
         'cartItems': cartItems,
         'order': order
