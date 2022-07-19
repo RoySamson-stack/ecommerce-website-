@@ -211,3 +211,6 @@ transform:scale(1.5);
   background-position: center;
   background-repeat: no-repeat;
 }
+.error{
+  color: red;
+}

@@ -39,6 +39,7 @@
       {{form.password2}}
       <label>Confirm Password</label>
     </div>
+    {% if form.errors %} {% for field in form %} {% for error in field.errors %}<p class="error"> {{ error }}</p> {% endfor %}{% endfor %}{% endif %}
     <p class="signup">Already have an account ?<a href="{% url 'login'%}">login</a></p>
 
       <input type="submit" class="input" value="Signup">
