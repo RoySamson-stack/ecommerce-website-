@@ -19,6 +19,7 @@
                             </div>
 
                             <form action="" method="post">
+                                {%csrf_token%}
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="first_name">First Name <span>*</span></label>
@@ -30,7 +31,7 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="country">Country <span>*</span></label>
-                                        <select class="custom-select d-block w-100" id="country">
+                                        <select class="custom-select d-block w-100" name="country" id="country">
                                         <option value="ken">Kenya</option>
                                         <option value="ug">Uganda</option>
                                         <option value="tz">Tanzania</option>
@@ -45,45 +46,38 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="street_address">Address <span>*</span></label>
-                                        <input type="text" class="form-control mb-3" id="street_address" value=""  required>
+                                        <input type="text" class="form-control mb-3" name="address" id="street_address" value=""  required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="postcode">Postcode <span>*</span></label>
-                                        <input type="text" class="form-control" id="postcode" value=""  required>
+                                        <input type="text" name="postcode" class="form-control" id="postcode" value=""  required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="city">Town/City <span>*</span></label>
-                                        <input type="text" class="form-control" id="city" value="" required>
+                                        <input type="text" class="form-control" id="city" name="city" value="" required>
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="state">Province <span>*</span></label>
-                                        <input type="text" class="form-control" id="state" value="" required>
+                                        <label for="state">County<span>*</span></label>
+                                        <input type="text" class="form-control" name="county" id="state" value="" required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="phone_number">Phone No <span>*</span></label>
-                                        <input type="number" class="form-control" id="phone_number" min="0" value="" required>
+                                        <input type="text" class="form-control" name="phone_number" id="phone_number"  value="" required>
                                     </div>
                                     <div class="col-12 mb-4">
                                         <label for="email_address">Email Address <span>*</span></label>
-                                        <input type="email" class="form-control" id="email_address" value="" required>
+                                        <input type="email" class="form-control"name="email" id="email_address" value="" required>
                                     </div>
-
-                                    <div class="col-12">
-                                        <div class="custom-control custom-checkbox d-block mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                            <label class="custom-control-label" for="customCheck1">Terms and conitions</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox d-block">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                            <label class="custom-control-label" for="customCheck3">Subscribe to our newsletter</label>
-                                        </div>
+                                    <div class="col-12 mb-3">
+                                        <p><div id="paypal-button-container"></div>.</p>
                                     </div>
+                                    <input type="submit" class="btn karl-checkout-btn" value="Checkout""/>
                                 </div>
                             </form>
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
+                    <div class="col-12 col-md-6 col-lg-5 ml-lg-auto payment-form" id="hide">
                         <div class="order-details-confirmation">
 
                             <div class="cart-page-heading">
@@ -111,7 +105,7 @@
                                     </div>
                                     <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                         <div class="card-body">
-                                            <p><div id="paypal-button-container"></div>.</p>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +135,7 @@
                                 </div>
                             </div>
 
-                            <a href="{%url 'checkout_success'%}" class="btn karl-checkout-btn">Place Order</a>
+                            <!-- <a href="{%url 'checkout'%}" class="btn karl-checkout-btn">Place Order</a> -->
                         </div>
                     </div>
 
@@ -257,7 +251,9 @@
 
         }).render('#paypal-button-container');
     </script>
-
+    <script>
+    //javascript to change dispay none to display form 
+   
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="{%static 'js/jquery/jquery-2.2.4.min.js'%}"></script>
     <!-- Popper js -->
