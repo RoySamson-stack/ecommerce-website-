@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-{%load static %}
+{%load static%}
 {%block content%}
 
 <body>
@@ -88,7 +88,7 @@
                             <ul class="order-details-form mb-4">
                                 <li><span>Product</span> <span>Total</span></li>
                                 {%for cartItem in cartItems%}
-                                <li><span>{{cartItem.product.name}}</span> <span>{{cartItem.product.price}}</span></li>
+                                <li><span><img src='{{cartItem.product.image.url}}' alt="product image"class="order-img"/></span><span>{{cartItem.product.name}}</span> <span>{{cartItem.product.price}}</span></li>
                                 {%endfor%}
                                 <li><span>Subtotal</span> <span>{{total}}</span></li>
                                 <li><span>Shipping</span> <span>Free</span></li>
@@ -96,7 +96,7 @@
                             </ul>
 
 
-                            <div id="accordion" role="tablist" class="mb-4">
+                            <!-- <div id="accordion" role="tablist" class="mb-4">
                                 <div class="card">
                                     <div class="card-header" role="tab" id="headingOne">
                                         <h6 class="mb-0">
@@ -112,12 +112,12 @@
                                 <div class="card">
                                     <div class="card-header" role="tab" id="headingTwo">
                                         <h6 class="mb-0">
-                                            <!-- <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fa fa-circle-o mr-3"></i>cash on delievery</a> -->
+                                             <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fa fa-circle-o mr-3"></i>cash on delievery</a> 
                                         </h6>
                                     </div>
                                     <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
                                         <div class="card-body">
-                                            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo quis in veritatis officia inventore, tempore provident dignissimos.</p> -->
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo quis in veritatis officia inventore, tempore provident dignissimos.</p> 
                                         </div>
                                     </div>
                                 </div>
@@ -129,11 +129,11 @@
                                     </div>
                                     <div id="collapseFour" class="collapse show" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
                                         <div class="card-body">
-                                            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est cum autem eveniet saepe fugit, impedit magni.</p> -->
+                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est cum autem eveniet saepe fugit, impedit magni.</p> 
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- <a href="{%url 'checkout'%}" class="btn karl-checkout-btn">Place Order</a> -->
                         </div>

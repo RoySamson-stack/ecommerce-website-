@@ -204,3 +204,10 @@ transform:scale(1.5);
 .payment-form{
   /* display: none; */
 }
+.order-img{
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
