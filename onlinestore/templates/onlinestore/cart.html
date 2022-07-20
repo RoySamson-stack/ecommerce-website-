@@ -28,7 +28,7 @@
                                         <td class="qty">
                                             <div class="quantity">
                                                 <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                <input type="text" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{cartItem.quantity}}">
+                                                <input type="text" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{quantity}}">
                                                 <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                             </div>
                                         </td>
@@ -79,14 +79,9 @@
                             </div>
 
                             <div class="custom-control custom-radio mb-30">
-                                <input type="radio" id="customRadio1" name="choice" class="custom-control-input" value="1500 ">
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1"><span>Within Nairobi</span><span>ksh 1500</span></label>
+                                <input type="radio" id="customRadio1" name="choice" class="custom-control-input" value="">
+                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1"><span>Within Nairobi</span><span>Free</span></label>
                             </div> 
-
-                            <div class="custom-control custom-radio mb-30">
-                                <input type="radio" id="customRadio2" name="choice" class="custom-control-input" value="2500">
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2"><span>Counties nearbouring Nairobi</span><span>ksh 2500</span></label>
-                            </div>
                             <div class="custom-control custom-radio mb-30">
                                 <input type="radio" id="customRadio2" name="choice" class="custom-control-input" value="3500">
                                 <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2"><span>Other counties</span><span>ksh 3500</span></label>
@@ -102,7 +97,7 @@
 
                             <ul class="cart-total-chart">
                                 <li><span>Subtotal</span> <span>{{total}}</span></li>
-                                <li><span>Shipping</span> <span>Free</span></li>
+                                <li class="shipping"><span>Shipping</span> <span>3500</span></li>
                                 <li><span><strong>Total</strong></span> <span><strong>{{total}}</strong></span></li>
                             </ul>
                             <a href="{%url 'checkout'%}" class="btn karl-checkout-btn">Proceed to checkout</a>

@@ -143,7 +143,7 @@ def remove_cart_item(request, id):
     orderItem.delete()
     return redirect('cart')
 
-def cart(request, total = 0, quantity=0):
+def cart(request, total = 0, quantity=0, itemttotal=0):
     customer = request.user
     choice = request.POST.get('choice', None)
     order = Cart.objects.filter(customer=customer, purchase_complete=False)
@@ -151,6 +151,8 @@ def cart(request, total = 0, quantity=0):
     item_count = cartItems.count()
      
     for item in cartItems:
+        quantity = item.quantity
+        itemtotal = int(item.quantity * item.product.price)
         total += (int(item.product.price))
     if choice in ['1500']:
           total += 1500
@@ -163,7 +165,8 @@ def cart(request, total = 0, quantity=0):
     context = {
         'cartItems': cartItems,
         'item_count': item_count,
-        # 'itemtotal': itemtotal,
+        'quantity': quantity,
+        'itemtotal': itemtotal,
         'total': total,
         # 'grandTotal': grandTotal
         
