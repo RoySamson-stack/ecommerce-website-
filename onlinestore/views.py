@@ -105,7 +105,8 @@ def add_to_cart(request, id, quantity=0):
         if orderItem is not None:
             orderItem.quantity += 1
             orderItem.save()
-        else:    
+        else: 
+            orderItem.quantity = 1   
             orderItem.save()
         context = {'orderItem': orderItem, 'quantity': quantity} 
     else:     

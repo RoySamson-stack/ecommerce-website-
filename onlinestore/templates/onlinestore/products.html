@@ -76,42 +76,45 @@
 
         <section class="shop_grid_area section_padding_100">
             <div class="container">
+                <div class="karl-projects-menu mb-100">
+                    <div class="text-center portfolio-menu">
+                        <button class="btn active" data-filter="*">ALL</a>
+                        <button class="btn" data-filter="#women">WOMAN</button>
+                        <button class="btn" data-filter="#men">MAN</button>
+                        <button class="btn" data-filter="#access">ACCESSORIES</button>
+                        <button class="btn" data-filter="#shoes">shoes</button>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 col-md-4 col-lg-3">
                         <div class="shop_sidebar_area">
                            
-                            <div class="widget catagory mb-50">
-                                <!--  Side Nav  -->
+                            <!-- <div class="widget catagory mb-50">
                                 <div class="nav-side-menu">
                                     <h6 class="mb-0">Catergories</h6>
                                     <div class="menu-list">
                                         <ul id="menu-content2" class="menu-content collapse out">
-                                            <!-- Single Item -->
                                             <li data-toggle="collapse" data-target="*">
                                                 <a href="#">All</a>
                                             </li>
-                                            <!-- Single Item -->
                                             <li data-toggle="collapse" data-target="#women"  class="collapsed">
                                                 <a href="#">Woman wear</a>
                                             </li>
-                                            <!-- Single Item -->
                                             <li data-toggle="collapse" data-target="#men" class="collapsed">
                                                 <a href="#">Man Wear</a>
                                                
                                             </li>
-                                            <!-- Single Item -->
                                             <li data-toggle="collapse" data-target="#bags" class="collapsed">
                                                 <a href="#">Bags &amp; Purses</a>
                                 
                                             </li>
-                                            <!-- Single Item -->
                                             <li data-toggle="collapse" data-target="#assesories" class="collapsed">
                                                 <a href="#">Assesories</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="widget price mb-50">
                                 <h6 class="widget-title mb-30">Filter by Price</h6>
@@ -132,11 +135,10 @@
                                 <div class="widget-desc">
                                     <!-- Single Recommended Product -->
                                     <!---->
-                                    {%if product.collection == product.collection%}
                                         {%for product in products%}
                                         <div class="single-recommended-product d-flex mb-30">
                                             <div class="single-recommended-thumb mr-3">
-                                                <img src="{{product.image.url}}" alt="">
+                                                <img src="{{product.imageUrl}}" alt="">
                                             </div>
                                             <div class="single-recommended-desc">
                                                 <h6>{{product.name}}</h6>
@@ -144,12 +146,12 @@
                                             </div>
                                         </div>
                                         {%endfor%}
-                                    {%endif%}
                                 </div>
                             </div>
                         </div>
                     </div>
 
+           
                     <div class="col-12 col-md-8 col-lg-9">
                         <div class="shop_grid_product_area">
                             <div class="row">
@@ -158,7 +160,7 @@
                                 <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="1s" id="{{product.filter}}">
                                     <!-- Product Image -->
                                     <div class="product-img">
-                                        <img src="{{product.image.url}}" alt="" class="product_img">
+                                        <img src="{{product.imageUrl}}" alt="" class="product_img">
                                         <!-- <div class="product-quicview">
                                             <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                                         </div> -->

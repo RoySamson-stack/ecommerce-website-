@@ -54,6 +54,7 @@ class Product(models.Model):
         except:
             url = ''
         return url
+        
     def get_absolute_url(self):
          return reverse('onlinestore:product_view', args=[self.id, self.slug])
 

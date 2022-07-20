@@ -52,7 +52,7 @@
                             <div id="product_details_slider" class="carousel slide" data-ride="carousel">
 
                                 <ol class="carousel-indicators">
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url({{product.image.url}});">
+                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url({{product.imageUrl}});">
                                     </li>
                                     <!-- <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(img/product-img/product-2.jpg);">
                                     </li>
@@ -64,8 +64,8 @@
                                 <!--Will make the sid show to work for the products-->
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <a class="gallery_img" href="{{product.image.url}}">
-                                        <img class="d-block w-100" src="{{product.image.url}}" alt="First slide">
+                                        <a class="gallery_img" href="{{product.imageUrl}}">
+                                        <img class="d-block w-100" src="{{product.imageUrl}}" alt="First slide">
                                     </a>
                                     </div>
                                     <!-- <div class="carousel-item">
@@ -80,7 +80,7 @@
                                     </div>
                                     <div class="carousel-item">
                                         <a class="gallery_img" href="img/product-img/product-4.jpg">
-                                        <img class="d-block w-100" src="{{product.image.url}}" alt="Fourth slide">
+                                        <img class="d-block w-100" src="{{product.imageUrl}}" alt="Fourth slide">
                                     </a>
                                     </div> -->
                                 </div>
@@ -263,7 +263,7 @@
                                     <!-- Product Image -->
 
                                     <div class="product-img">
-                                        <img src="{{product.image.url}}" alt="">
+                                        <img src="{{product.imageUrl}}" alt="">
                                         <!-- <div class="product-quicview">
                                             <a href="{url 'product_view' product.id}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                                         </div> -->
