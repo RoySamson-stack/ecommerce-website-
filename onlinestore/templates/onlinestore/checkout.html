@@ -88,7 +88,7 @@
                             <ul class="order-details-form mb-4">
                                 <li><span>Product</span> <span>Total</span></li>
                                 {%for cartItem in cartItems%}
-                                <li><span><img src='{{cartItem.product.imageUrl}}' alt="product image"class="order-img"/></span><span>{{cartItem.product.name}}</span> <span>{{cartItem.product.price}}</span></li>
+                                <li><span><img src='{{cartItem.product.imageUrl}}' alt="product image"class="order-img"/></span><span>{{cartItem.product.name}}</span> <span>{{cartItem.total}}</span></li>
                                 {%endfor%}
                                 <li><span>Subtotal</span> <span>{{total}}</span></li>
                                 <li><span>Shipping</span> <span>Free</span></li>

@@ -154,7 +154,7 @@ def cart(request, total = 0, quantity=0, itemtotal = 0):
     for cartItem in cartItems:
         itemtotal = int(cartItem.quantity * cartItem.product.price)
     for item in cartItems:
-        total += (int(item.product.price))
+        total += (int(item.total))
     # if choice in ['1500']:
     #       total += 1500
     # elif choice in ['2500']:
@@ -178,9 +178,8 @@ def checkout(request, total = 0):
     order = Cart.objects.filter(customer=customer)
     order.purchase_complete = True
     cartItems = CartItems.objects.filter(cart__in=order)
-    
     for item in cartItems:
-        total += (int(item.product.price))
+        total += (int(item.total))
     context = {
         'cartItems': cartItems,
         'order': order,
@@ -213,7 +212,6 @@ def checkout(request, total = 0):
         
     )
     checkout.save()
-    order.clear()
     return render(request, 'onlinestore/checkout.html', context)
 
     
