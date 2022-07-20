@@ -167,10 +167,10 @@
         <!-- ****** Footer Area End ****** -->
     </div>
     <!-- /.wrapper end -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AXD9m8TJ2wH0EaFG22KEKlWUooQawtVKrK4YfO45a-ogNz0c9h0FHlVoMW6BNrqdRKbmZp67GM6_Qg5o&currency=KES"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AXD9m8TJ2wH0EaFG22KEKlWUooQawtVKrK4YfO45a-ogNz0c9h0FHlVoMW6BNrqdRKbmZp67GM6_Qg5o&currency=USD"></script>
 
     <script>
-        // var total = '{{order.get_cart_total}}'
+        var total = '{{total}}'
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
 
@@ -179,7 +179,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '88.00'
+                            value: total
                         }
                     }]
                 });
