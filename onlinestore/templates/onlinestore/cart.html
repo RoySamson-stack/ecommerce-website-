@@ -32,7 +32,7 @@
                                                 <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                             </div>
                                         </td>
-                                        <td class="total_price"><span>{{itemtotal}}</span></td>
+                                        <td class="total_price"><span>{{cartItem.total}}</span></td>
                                         <td><a href="{%url 'remove_cart_item' cartItem.product.id%}" class="dlt_btn"><i class="ti-trash"></i></a>
                                         </td>
                                     </tr>

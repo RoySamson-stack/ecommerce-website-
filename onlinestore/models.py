@@ -98,6 +98,7 @@ class  CartItems(models.Model):
   product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
   is_ordered = models.BooleanField(default=False)
   quantity = models.IntegerField(default=0)
+  total = models.FloatField(default=0)
   date_created = models.DateTimeField(auto_now_add=True, null=True)
 
   
@@ -105,7 +106,6 @@ class  CartItems(models.Model):
   def get_total(self):
     total = self.product.price * self.quantity
     return total
-  #onlcik the the items as cart items  
   
   
   

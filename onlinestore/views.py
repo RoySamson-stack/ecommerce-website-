@@ -119,6 +119,7 @@ def add_to_cart(request, id, quantity=0):
     if itemexist:
             cart = CartItems.objects.filter(product=product, cart=order)
             orderItem.quantity += 1
+            orderItem.total = orderItem.quantity * orderItem.product.price
             orderItem.save()
     return redirect('products')
 
@@ -150,9 +151,9 @@ def cart(request, total = 0, quantity=0, itemtotal = 0):
     cartItems = CartItems.objects.filter(cart__in=order)
     item_count = cartItems.count()
     # quantity = int(request.POST.get('quantity', 1))
-     
+    for cartItem in cartItems:
+        itemtotal = int(cartItem.quantity * cartItem.product.price)
     for item in cartItems:
-        itemtotal = int(item.quantity * item.product.price)
         total += (int(item.product.price))
     # if choice in ['1500']:
     #       total += 1500
@@ -165,7 +166,7 @@ def cart(request, total = 0, quantity=0, itemtotal = 0):
     context = {
         'cartItems': cartItems,
         'item_count': item_count,
-        'itemtotal': itemtotal,
+        # 'itemtotal': itemtotal,
         'total': total,
         # 'grandTotal': grandTotal
         
