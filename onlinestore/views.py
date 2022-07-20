@@ -145,11 +145,21 @@ def remove_cart_item(request, id):
 
 def cart(request, total = 0, quantity=0):
     customer = request.user
+    choice = request.POST.get('choice', None)
     order = Cart.objects.filter(customer=customer, purchase_complete=False)
     cartItems = CartItems.objects.filter(cart__in=order)
     item_count = cartItems.count()
+     
     for item in cartItems:
         total += (int(item.product.price))
+    if choice in ['1500']:
+          total += 1500
+    elif choice in ['2500']:
+        total += 2500
+    elif choice in ['3500']:
+        total += 3500       
+    elif choice in ['0']:
+        total += 0 
     context = {
         'cartItems': cartItems,
         'item_count': item_count,
@@ -200,6 +210,7 @@ def checkout(request, total = 0):
         
     )
     checkout.save()
+    order.clear()
     return render(request, 'onlinestore/checkout.html', context)
 
     
