@@ -12,6 +12,9 @@ from .forms import CreateUserForm, LoginForm
 from .utils import cookieCart, cartData, guestOrder
 from django.db.models import F, Sum
 
+from django.core.paginator import Paginator
+
+
 
 
 
@@ -74,9 +77,15 @@ def signup(request):
             
 def products(request):
     products = Product.objects.all()
-    #get the cart data from the cart Fuct
+    
+    
+    #set up pagination
+    paginator = Paginator(products, 9)
+    page = request.GET.get('page')
+    products_pages = paginator.get_page(page)
     context = {
-        'products': products
+        'products': products,
+        'products_pages': products_pages
     }
     return render(request, 'onlinestore/products.html', context)
 
@@ -215,4 +224,4 @@ def checkout(request, total = 0):
     return render(request, 'onlinestore/checkout.html', context)
 
     
-    
+     
