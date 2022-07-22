@@ -182,13 +182,17 @@ def cart(request, total = 0, quantity=0, itemtotal = 0):
     }
     return render(request, 'onlinestore/cart.html', context)
 
-def checkout(request, total = 0):
+def checkout(request, total=0):
     customer = request.user
     order = Cart.objects.filter(customer=customer)
     order.purchase_complete = True
     cartItems = CartItems.objects.filter(cart__in=order)
+    #reduce the quantity in stck for products after purchase 
     for item in cartItems:
+        product = Product.objects.get(id=item.product.id)
         total += (int(item.total))
+        product.inventory -= item.quantity
+        product.save()
     context = {
         'cartItems': cartItems,
         'order': order,
