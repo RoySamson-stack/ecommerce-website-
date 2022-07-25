@@ -151,6 +151,30 @@ def remove_cart_item(request, id):
     orderItem.delete()
     return redirect('cart')
 
+def update_cart(request, quantity= 0 ):
+    customer = request.user
+    order = Cart.objects.filter(customer=customer)
+    cartItems = CartItems.objects.filter(cart__in=order)
+    for item in cartItems:
+        quantity = request.POST.get('quantity' + str(item.id), 0)
+        if quantity == 0:
+            item.delete()
+        else:
+            item.quantity = quantity
+            item.total = item.quantity * item.product.price
+            item.save()
+    return redirect('cart')    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 def cart(request, total = 0, quantity=0, itemtotal = 0):
     customer = request.user
     choice = request.POST.get('choice', None)
@@ -185,45 +209,51 @@ def checkout(request, total=0):
     order = Cart.objects.filter(customer=customer)
     order.purchase_complete = True
     cartItems = CartItems.objects.filter(cart__in=order)
-    #reduce the quantity in stck for products after purchase 
-    for item in cartItems:
-        product = Product.objects.get(id=item.product.id)
-        total += (int(item.total))
-        product.inventory -= item.quantity
-        product.save()
-    context = {
-        'cartItems': cartItems,
-        'order': order,
-        'total': total
-    }
+    #reduce the quantity in stck for products after purchase
+    #check if cart id empty 
+    if cartItems.count() > 0:
+        for item in cartItems:
+            product = Product.objects.get(id=item.product.id)
+            total += (int(item.total))
+            product.inventory -= item.quantity
+            product.save()
+        context = {
+            'cartItems': cartItems,
+            'order': order,
+            'total': total
+        }
 
-    order = Cart.objects.filter(customer=customer)
-    customer = request.user
-    shipping_country = request.POST.get('country')
-    shipping_address = request.POST.get('address')
-    shipping_city =request.POST.get('city')
-    shipping_zipcode = request.POST.get('postcode')
-    shipping_county = request.POST.get('county')
-    shipping_town = request.POST.get('city')
-    phone = request.POST.get('phone_number')
-    email = request.POST.get('email')
-    order_complete = True 
-    payment_complete = True
-    checkout = Checkout.objects.create(
-        customer=customer,
-        shipping_country = shipping_country,
-        shipping_address = shipping_address,
-        shipping_city = shipping_city,
-        shipping_zipcode = shipping_zipcode,
-        shipping_county = shipping_county,
-        shipping_town = shipping_town,
-        phone_number = phone,
-        order_complete = order_complete,
-        payment_complete = payment_complete
-        
-    )
-    checkout.save()
-    return render(request, 'onlinestore/checkout.html', context)
+        order = Cart.objects.filter(customer=customer)
+        customer = request.user
+        shipping_country = request.POST.get('country')
+        shipping_address = request.POST.get('address')
+        shipping_city =request.POST.get('city')
+        shipping_zipcode = request.POST.get('postcode')
+        shipping_county = request.POST.get('county')
+        shipping_town = request.POST.get('city')
+        phone = request.POST.get('phone_number')
+        email = request.POST.get('email')
+        order_complete = True 
+        payment_complete = True
+        checkout = Checkout.objects.create(
+            customer=customer,
+            shipping_country = shipping_country,
+            shipping_address = shipping_address,
+            shipping_city = shipping_city,
+            shipping_zipcode = shipping_zipcode,
+            shipping_county = shipping_county,
+            shipping_town = shipping_town,
+            phone_number = phone,
+            order_complete = order_complete,
+            payment_complete = payment_complete
+            
+        )
+        checkout.save()
+        return render(request, 'onlinestore/checkout.html', context)
+    else:
+        return redirect('cart')
+        messages.success(request, 'Your cart is empty')
+      
 
     
      

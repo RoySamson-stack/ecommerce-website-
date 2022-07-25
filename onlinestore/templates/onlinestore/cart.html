@@ -18,6 +18,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                   
                                     {%for cartItem in cartItems%}
                                     <tr>
                                         <td class="cart_product_img d-flex align-items-center">
@@ -27,9 +28,9 @@
                                         <td class="price"><span>{{cartItem.product.price}}</span></td>
                                         <td class="qty">
                                             <div class="quantity">
-                                                <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                                <!-- <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span> -->
                                                 <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{cartItem.quantity}}">
-                                                <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                                <!-- <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span> -->
                                             </div>
                                         </td>
                                         <td class="total_price"><span>{{cartItem.total}}</span></td>
@@ -47,7 +48,7 @@
                             </div>
                             <div class="update-checkout w-50 text-right">
                                 <a href="{%url 'clear_cart'%}">clear cart</a>
-                                <a href="#">Update cart</a>
+                                <!-- <a href="{%url 'update_cart'%}">Update cart</a> -->
                             </div>
                         </div>
 
@@ -71,21 +72,21 @@
                         - <div class="shipping-method-area mt-70">
                             <div class="cart-page-heading">
                                 <h5>Shipping method</h5>
-                                <p>Select the one you want</p>
+                                <!-- <p>Select the one you want</p> -->
                             </div>
                             <div class="custom-control custom-radio">
                                 <input type="radio" id="customRadio3" name="choice" class="custom-control-input" value="0">
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3"><span>Personal Pickup</span><span>Free</span></label>
+                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3"><span></span><span>Free</span></label>
                             </div>
 
-                            <div class="custom-control custom-radio mb-30">
+                            <!-- <div class="custom-control custom-radio mb-30">
                                 <input type="radio" id="customRadio1" name="choice" class="custom-control-input" value="">
                                 <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1"><span>Within Nairobi</span><span>Free</span></label>
                             </div> 
                             <div class="custom-control custom-radio mb-30">
                                 <input type="radio" id="customRadio2" name="choice" class="custom-control-input" value="3500">
                                 <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2"><span>Other counties</span><span>ksh 3500</span></label>
-                            </div>
+                            </div> -->
                         </div> 
                     </div>
                     <div class="col-12 col-lg-4">
@@ -97,7 +98,7 @@
 
                             <ul class="cart-total-chart">
                                 <li><span>Subtotal</span> <span>{{total}}</span></li>
-                                <li class="shipping"><span>Shipping</span> <span>3500</span></li>
+                                <li class="shipping"><span>Shipping</span> <span>Free</span></li>
                                 <li><span><strong>Total</strong></span> <span><strong>{{total}}</strong></span></li>
                             </ul>
                             <a href="{%url 'checkout'%}" class="btn karl-checkout-btn">Proceed to checkout</a>

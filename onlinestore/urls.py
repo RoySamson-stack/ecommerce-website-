@@ -15,6 +15,7 @@ urlpatterns = [
   path('cart/', login_required(views.cart, login_url='/login/'), name='cart'),
   path('cart/add/<int:id>', views.add_to_cart, name='add_to_cart'),
   path('cart/remove_item/<int:id>/', views.remove_cart_item, name='remove_cart_item'),
+  path('cart/update_cart/', views.update_cart, name='update_cart'),
   path('cart/clear', views.clear_cart, name='clear_cart'),
   path('checkout/', login_required(views.checkout, login_url="/login/"), name='checkout'),
   # path('checkout/success/', views.checkout_success, name='checkout_success'),
