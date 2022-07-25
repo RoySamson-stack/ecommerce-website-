@@ -77,14 +77,12 @@ def signup(request):
             
 def products(request):
     products = Product.objects.all()
-    
-    
     #set up pagination
     paginator = Paginator(products, 9)
     page = request.GET.get('page')
     products_pages = paginator.get_page(page)
     context = {
-        'products': products,
+        'products': products[0:4],
         'products_pages': products_pages
     }
     return render(request, 'onlinestore/products.html', context)

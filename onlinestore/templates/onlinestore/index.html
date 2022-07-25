@@ -12,7 +12,7 @@
                         <div class="row h-100 align-items-center">
                             <div class="col-12">
                                 <div class="welcome_slide_text">
-                                    <h6 data-animation="bounceInDown" data-delay="0" data-duration="500ms">* Only today we offer free shipping</h6>
+                                    <h6 data-animation="bounceInDown" data-delay="0" data-duration="500ms"></h6>
                                     <h2 data-animation="fadeInUp" data-delay="500ms" data-duration="500ms">Fashion Trends</h2>
                                     <a href="{%url 'products'%}" class="btn karl-btn" data-animation="fadeInUp" data-delay="1s" data-duration="500ms">Shop Now</a>
                                 </div>
@@ -28,7 +28,7 @@
                             
                             <div class="col-12">
                                 <div class="welcome_slide_text">
-                                    <h6 data-animation="fadeInDown" data-delay="0" data-duration="500ms">* Only today we offer free shipping</h6>
+                                    <h6 data-animation="fadeInDown" data-delay="0" data-duration="500ms"></h6>
                                     <h2 data-animation="fadeInUp" data-delay="500ms" data-duration="500ms">Mens Collection</h2>
                                     <a href="{%url 'products'%}" class="btn karl-btn" data-animation="fadeInLeftBig" data-delay="1s" data-duration="500ms">Check Collection</a>
                                 </div>
@@ -43,7 +43,7 @@
                         <div class="row h-100 align-items-center">
                             <div class="col-12">
                                 <div class="welcome_slide_text">
-                                    <h6 data-animation="fadeInDown" data-delay="0" data-duration="500ms">* Only today we offer free shipping</h6>
+                                    <h6 data-animation="fadeInDown" data-delay="0" data-duration="500ms"></h6>
                                     <h2 data-animation="bounceInDown" data-delay="500ms" data-duration="500ms">Women Fashion</h2>
                                     <a href="{%url 'products'%}" class="btn karl-btn" data-animation="fadeInRightBig" data-delay="1s" data-duration="500ms">Check Collection</a>
                                 </div>
@@ -175,16 +175,19 @@
                     <div class="col-12 col-sm-6 col-md-4 single_gallery_item kids wow fadeInUpBig" data-wow-delay="0.7s" id="{{product.filter}}">
                         <!-- Product Image -->
                         <div class="product-img">
-                            <img src="{{product.imageUrl}}" alt="" class="shop-item-image product_img">
-                            <!-- <div class="product-quicview">
-                                <a href="{% url 'product_view' product.id %}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                            </div> -->
+                            <a href="{%url  'product_view' product.id%}">
+                                <img src="{{product.imageUrl}}" alt="" class="shop-item-image product_img">
+                                <!-- <div class="product-quicview">
+                                    <a href="{% url 'product_view' product.id %}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
+                                </div> -->
+                            </a>
+                         
                         </div>
                         <!-- Product Description -->
                         <div class="product-description">
                             <h4 class="product-price shop-item-price">ksh {{product.price}}</h4>
                             <p class="shop-item-title">{{product.name}}</p>
-                            <a href="{%url  'product_view' product.id%}">View Full Product Details</a>
+                            <!-- <a href="{%url  'product_view' product.id%}">View Full Product Details</a> -->
                             <!-- Add to Cart -->
                             <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart-btn shop-item-button add-btn" >ADD TO CART</a>
                         </div>

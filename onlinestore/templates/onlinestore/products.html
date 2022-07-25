@@ -159,11 +159,14 @@
                                {%for product in products_pages%}
                                 <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="1s" id="{{product.filter}}">
                                     <!-- Product Image -->
+                                    
                                     <div class="product-img">
-                                        <img src="{{product.imageUrl}}" alt="" class="product_img">
-                                        <!-- <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                        </div> -->
+                                        <a href="{%url  'product_view' product.id%}" >
+                                            <img src="{{product.imageUrl}}" alt="" class="product_img">
+                                            <!-- <div class="product-quicview">
+                                                <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
+                                            </div> -->
+                                        </a>
                                     </div>
                                     <!-- Product Description -->
                                     <div class="product-description">
