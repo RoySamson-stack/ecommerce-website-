@@ -204,7 +204,7 @@ def cart(request, total = 0, quantity=0, itemtotal = 0):
     }
     return render(request, 'onlinestore/cart.html', context)
 
-def checkout(request, total=0):
+def checkout(request, total=0, total_conv=0):
     customer = request.user
     order = Cart.objects.filter(customer=customer)
     order.purchase_complete = True
@@ -215,12 +215,15 @@ def checkout(request, total=0):
         for item in cartItems:
             product = Product.objects.get(id=item.product.id)
             total += (int(item.total))
+            total_conv += round(int(item.total)/112)
+
             product.inventory -= item.quantity
             product.save()
         context = {
             'cartItems': cartItems,
             'order': order,
-            'total': total
+            'total': total,
+            'total_conv':total_conv
         }
 
         order = Cart.objects.filter(customer=customer)
@@ -255,5 +258,25 @@ def checkout(request, total=0):
         messages.success(request, 'Your cart is empty')
       
 
-    
-     
+def add_quantity(request, id):
+    customer = request.user
+    product = Product.objects.get(id=id)
+    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+    orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+    cart = CartItems.objects.filter(product=product, cart=order)
+    orderItem.quantity += 1
+    orderItem.total = orderItem.quantity * orderItem.product.price
+    orderItem.save()
+    return redirect('cart')
+
+
+def remove_quantity(request, id):
+    customer = request.user
+    product = Product.objects.get(id=id)
+    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+    orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+    cart = CartItems.objects.filter(product=product, cart=order)
+    orderItem.quantity -= 1
+    orderItem.total = orderItem.quantity * orderItem.product.price
+    orderItem.save()
+    return redirect('cart')

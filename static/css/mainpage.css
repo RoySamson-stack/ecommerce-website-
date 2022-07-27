@@ -214,3 +214,13 @@ transform:scale(1.5);
 .error{
   color: red;
 }
+#product_view-btn{
+  background-color: #ff084e;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}

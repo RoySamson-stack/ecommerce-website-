@@ -18,30 +18,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
-                                    {%for cartItem in cartItems%}
-                                    <tr>
-                                        <td class="cart_product_img d-flex align-items-center">
-                                            <a href="#"><img src="{{cartItem.product.imageUrl}}" alt="Product"></a>
-                                            <h6>{{cartItem.product.name}}</h6>
-                                        </td>
-                                        <td class="price"><span>{{cartItem.product.price}}</span></td>
-                                        <td class="qty">
-                                            <div class="quantity">
-                                                <!-- <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span> -->
-                                                <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{cartItem.quantity}}">
-                                                <!-- <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span> -->
-                                            </div>
-                                        </td>
-                                        <td class="total_price"><span>{{cartItem.total}}</span></td>
-                                        <td><a href="{%url 'remove_cart_item' cartItem.product.id%}" class="dlt_btn"><i class="ti-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    {%endfor%}
-                                </tbody>
-                            </table>
-                        </div>
-
+                                   {%if item_count < 0  %}
+                                        <tr>
+                                            <td colspan="4" class="text-center">
+                                                <h3>No items in cart</h3>
+                                            </td>
+                                        </tr>    
+                                    {%else%}    
+                                        {%for cartItem in cartItems%}
+                                        <tr>
+                                            <td class="cart_product_img d-flex align-items-center">
+                                                <a href="#"><img src="{{cartItem.product.imageUrl}}" alt="Product"></a>
+                                                <h6>{{cartItem.product.name}}</h6>
+                                            </td>
+                                            <td class="price"><span>{{cartItem.product.price}}</span></td>
+                                            <td class="qty">
+                                                <div class="quantity">
+                                                    <a href="{%url 'remove_quantity' cartItem.product.id%}"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{cartItem.quantity}}">
+                                                    <a href="{%url 'add_quantity' cartItem.product.id%}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                                </div>
+                                            </td>
+                                            <td class="total_price"><span>{{cartItem.total}}</span></td>
+                                            <td><a href="{%url 'remove_cart_item' cartItem.product.id%}" class="dlt_btn"><i class="ti-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        {%endfor%}
+                                    {%endif%}
+                                    </tbody>
+                                </table>
+                            </div>
                         <div class="cart-footer d-flex mt-30">
                             <div class="back-to-shop w-50">
                                 <a href="{%url 'products'%}">Continue shopping</a>
