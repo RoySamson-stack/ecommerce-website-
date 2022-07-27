@@ -83,11 +83,11 @@
                            
                              <div class="widget catagory mb-50">
                                 <div class="nav-side-menu">
-                                    <h6 class="mb-0">Catergories</h6>
+                                    <!-- <h6 class="mb-0">Catergories</h6> -->
                                     <div class="menu-list">
                                         <ul id="menu-content2" class="menu-content collapse out">
-                                            <li data-toggle="collapse" >
-                                                <a href="#">All</a>
+                                            <!-- <li data-toggle="collapse" >
+                                             <a href="#">All</a> 
                                             </li>
                                             <li data-toggle="collapse"   class="collapsed">
                                                 <a href="#">Woman wear</a>
@@ -102,7 +102,7 @@
                                             </li>
                                             <li data-toggle="collapse"  class="collapsed">
                                                 <a href="#">Assesories</a>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 </div>
@@ -145,32 +145,48 @@
                     </div>
 
                     <div class="col-12 col-md-8 col-lg-9">
-
-                        <div class="shop_grid_product_area">
-                            <div class="row">
-                               <!-- Single gallery Item -->
-                               {%for product in products_pages%}
-                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="1s" id="{{product.filter}}">
-                                    <!-- Product Image -->
-                                    
-                                    <div class="product-img">
-                                        <a href="{%url  'product_view' product.id%}" >
-                                            <img src="{{product.imageUrl}}" alt="" class="product_img">
-                                            <!-- <div class="product-quicview">
-                                                <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                            </div> -->
-                                        </a>
-                                    </div>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <h4 class="product-price">ksh {{product.price}}</h4>
-                                        <p class="shop-item-title"> {{product.name}}</p>
-                                        <!-- Add to Cart -->
-                                        <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart-btn shop-item-button add-btn" >ADD TO CART</a>                                    </div>
+                        <section class="new_arrivals_area section_padding_100_0 clearfix">
+                           
+                
+                            <div class="karl-projects-menu mb-100">
+                                <div class="text-center portfolio-menu">
+                                    <button class="btn active" data-filter="*">ALL</a>
+                                    <button class="btn" data-filter="#women">WOMAN</button>
+                                    <button class="btn" data-filter="#men">MAN</button>
+                                    <button class="btn" data-filter="#access">ACCESSORIES</button>
+                                    <button class="btn" data-filter="#shoes">shoes</button>
                                 </div>
-                                {%endfor%}
                             </div>
-                        </div>
+                
+                            <div class="container">
+                                <div class="row karl-new-arrivals">
+                                    <!-- Single gallery Item -->
+                                    <!--make the product have a range in this page cap it at 5-->
+                                    {%for product in products_pages%}
+                                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item kids wow fadeInUpBig" data-wow-delay="0.7s" id="{{product.filter}}">
+                                        <!-- Product Image -->
+                                        <div class="product-img">
+                                            <a href="{%url  'product_view' product.id%}">
+                                                <img src="{{product.imageUrl}}" alt="" class="shop-item-image product_img">
+                                                <!-- <div class="product-quicview">
+                                                    <a href="{% url 'product_view' product.id %}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
+                                                </div> -->
+                                            </a>
+                                         
+                                        </div>
+                                        <!-- Product Description -->
+                                        <div class="product-description">
+                                            <h4 class="product-price shop-item-price">ksh {{product.price}}</h4>
+                                            <p class="shop-item-title">{{product.name}}</p>
+                                            <!-- <a href="{%url  'product_view' product.id%}">View Full Product Details</a> -->
+                                            <!-- Add to Cart -->
+                                            <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart-btn shop-item-button add-btn" >ADD TO CART</a>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    <!--Add a load more button that redirects to the prodcuts page-->
+                                </div>
+                            </div>
 
                         <div class="shop_pagination_area wow fadeInUp" data-wow-delay="1.1s">
                             <nav aria-label="Page navigation">
