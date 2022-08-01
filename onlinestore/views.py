@@ -21,10 +21,14 @@ from django.core.paginator import Paginator
 # Create your views here.
 def index(request):
     products = Product.objects.all()
+    customer = request.user
    #get cart data from cartData 
+    order = Cart.objects.filter(customer=customer, purchase_complete=False)
+    cartItems = CartItems.objects.filter(cart__in=order)
+    item_count = cartItems.count()
     data = {
-            'products': products[0:6]
-                
+            'products': products[0:6],
+             'item_count':item_count   
             } 
     return render(request, 'onlinestore/index.html', data)
 
@@ -81,9 +85,15 @@ def products(request):
     paginator = Paginator(products, 9)
     page = request.GET.get('page')
     products_pages = paginator.get_page(page)
+    customer = request.user
+   #get cart data from cartData 
+    order = Cart.objects.filter(customer=customer, purchase_complete=False)
+    cartItems = CartItems.objects.filter(cart__in=order)
+    item_count = cartItems.count()
     context = {
         'products': products[0:4],
-        'products_pages': products_pages
+        'products_pages': products_pages,
+        'item_count': item_count,
     }
     return render(request, 'onlinestore/products.html', context)
 
@@ -91,7 +101,12 @@ def products(request):
 
 def product_view(request, id):
     product = Product.objects.get(id=id)
-    return render(request, 'onlinestore/product_view.html', {'product': product})
+    customer = request.user
+   #get cart data from cartData 
+    order = Cart.objects.filter(customer=customer, purchase_complete=False)
+    cartItems = CartItems.objects.filter(cart__in=order)
+    item_count = cartItems.count()
+    return render(request, 'onlinestore/product_view.html', {'product': product, 'item_count': item_count})
 
 def cart_id(request):
     cart_id = request.session.get('cart_id', None)
@@ -128,7 +143,7 @@ def add_to_cart(request, id, quantity=0):
             orderItem.quantity += 1
             orderItem.total = orderItem.quantity * orderItem.product.price
             orderItem.save()
-    return redirect('products')
+    return redirect('cart')
 
 def clear_cart(request):
     customer = request.user
@@ -211,6 +226,11 @@ def checkout(request, total=0, total_conv=0):
     cartItems = CartItems.objects.filter(cart__in=order)
     #reduce the quantity in stck for products after purchase
     #check if cart id empty 
+    customer = request.user
+   #get cart data from cartData 
+    order = Cart.objects.filter(customer=customer, purchase_complete=False)
+    cartItems = CartItems.objects.filter(cart__in=order)
+    item_count = cartItems.count()
     if cartItems.count() > 0:
         for item in cartItems:
             product = Product.objects.get(id=item.product.id)
@@ -220,6 +240,7 @@ def checkout(request, total=0, total_conv=0):
             product.inventory -= item.quantity
             product.save()
         context = {
+            'item_count': item_count,
             'cartItems': cartItems,
             'order': order,
             'total': total,
