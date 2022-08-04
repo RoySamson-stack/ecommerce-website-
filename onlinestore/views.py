@@ -21,15 +21,26 @@ from django.core.paginator import Paginator
 # Create your views here.
 def index(request):
     products = Product.objects.all()
-    customer = request.user
-   #get cart data from cartData 
-    order = Cart.objects.filter(customer=customer, purchase_complete=False)
-    cartItems = CartItems.objects.filter(cart__in=order)
-    item_count = cartItems.count()
-    data = {
-            'products': products[0:6],
-             'item_count':item_count   
-            } 
+    if request.user.is_anonymous:
+        customer = None
+        #get cart data from cartData 
+        order = Cart.objects.filter(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart__in=order)
+        item_count = cartItems.count()
+        data = {
+                'products': products[0:6],
+                'item_count':item_count   
+                } 
+    else:
+        #get cart data from cartData 
+        customer = request.user
+        order = Cart.objects.filter(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart__in=order)
+        item_count = cartItems.count()
+        data = {
+                'products': products[0:6],
+                'item_count':item_count   
+                } 
     return render(request, 'onlinestore/index.html', data)
 
 
@@ -85,27 +96,48 @@ def products(request):
     paginator = Paginator(products, 9)
     page = request.GET.get('page')
     products_pages = paginator.get_page(page)
-    customer = request.user
-   #get cart data from cartData 
-    order = Cart.objects.filter(customer=customer, purchase_complete=False)
-    cartItems = CartItems.objects.filter(cart__in=order)
-    item_count = cartItems.count()
-    context = {
-        'products': products[0:4],
-        'products_pages': products_pages,
-        'item_count': item_count,
-    }
+    if request.user.is_anonymous:
+        customer = None
+    #get cart data from cartData 
+        order = Cart.objects.filter(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart__in=order)
+        item_count = cartItems.count()
+        context = {
+            'products': products[0:4],
+            'products_pages': products_pages,
+            'item_count': item_count,
+        }
+    else:    
+        customer = request.user
+    #get cart data from cartData 
+        order = Cart.objects.filter(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart__in=order)
+        item_count = cartItems.count()
+        context = {
+            'products': products[0:4],
+            'products_pages': products_pages,
+            'item_count': item_count,
+        }
     return render(request, 'onlinestore/products.html', context)
 
 
 
 def product_view(request, id):
-    product = Product.objects.get(id=id)
-    customer = request.user
-   #get cart data from cartData 
-    order = Cart.objects.filter(customer=customer, purchase_complete=False)
-    cartItems = CartItems.objects.filter(cart__in=order)
-    item_count = cartItems.count()
+    
+    if request.user.is_anonymous:
+        customer = None
+        product = Product.objects.get(id=id)
+        #get cart data from cartData 
+        order = Cart.objects.filter(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart__in=order)
+        item_count = cartItems.count()
+    else:    
+        product = Product.objects.get(id=id)
+        customer = request.user
+    #get cart data from cartData 
+        order = Cart.objects.filter(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart__in=order)
+        item_count = cartItems.count()
     return render(request, 'onlinestore/product_view.html', {'product': product, 'item_count': item_count})
 
 def cart_id(request):

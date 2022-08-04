@@ -9,15 +9,17 @@ The setup the project in your computer you can download the project from the git
 
 First  install all requirments and dependencies
 
-``` pip install -r requirements.txt
+```
+pip install -r requirements.txt
 ```
 
 Then run the project by running the following command:
 
-``` python manage.py runserver
+``` 
+python manage.py runserver
 ```
 
-## The live projects
+## The live project
 https://ecommerce-web-dja.herokuapp.com/
 
 ## Languages and Tools used
