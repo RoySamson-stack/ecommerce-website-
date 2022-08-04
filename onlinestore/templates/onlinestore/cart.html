@@ -18,13 +18,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   {%if item_count < 0  %}
+                                   {%for message in messages %}
                                         <tr>
                                             <td colspan="4" class="text-center">
-                                                <h3>No items in cart</h3>
+                                                <h3>{{message}}</h3>
                                             </td>
                                         </tr>    
-                                    {%else%}    
+                                    {%endfor%}    
                                         {%for cartItem in cartItems%}
                                         <tr>
                                             <td class="cart_product_img d-flex align-items-center">
@@ -44,7 +44,6 @@
                                             </td>
                                         </tr>
                                         {%endfor%}
-                                    {%endif%}
                                     </tbody>
                                 </table>
                             </div>

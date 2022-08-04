@@ -178,10 +178,18 @@ def add_to_cart(request, id, quantity=0):
     return redirect('cart')
 
 def clear_cart(request):
-    customer = request.user
-    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
-    cartItems = CartItems.objects.filter(cart=order)
-    cartItems.delete()
+    if request.user.is_anonymous:
+        customer = None
+        order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart=order)
+        messages.success(request, 'Cart has been cleared')
+        cartItems.delete()
+    else:
+        customer = request.user
+        order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart=order)
+        messages.success(request, 'Cart has been cleared')
+        cartItems.delete()
     return redirect('cart')    
 
 
@@ -191,64 +199,114 @@ def clear_cart(request):
 
     
 def remove_cart_item(request, id):
-    customer = request.user
-    product = Product.objects.get(id=id)
-    order = Cart.objects.filter( customer=customer)
-    orderItem = CartItems.objects.filter(product=product, cart__in=order)
-    orderItem.delete()
+    if request.user.is_anonymous:
+        customer = None
+        product = Product.objects.get(id=id)
+        order = Cart.objects.filter( customer=customer)
+        orderItem = CartItems.objects.filter(product=product, cart__in=order)
+        orderItem.delete()
+    else:    
+        customer = request.user
+        product = Product.objects.get(id=id)
+        order = Cart.objects.filter( customer=customer)
+        orderItem = CartItems.objects.filter(product=product, cart__in=order)
+        orderItem.delete()
     return redirect('cart')
 
 def update_cart(request, quantity= 0 ):
-    customer = request.user
-    order = Cart.objects.filter(customer=customer)
-    cartItems = CartItems.objects.filter(cart__in=order)
-    for item in cartItems:
-        quantity = request.POST.get('quantity' + str(item.id), 0)
-        if quantity == 0:
-            item.delete()
-        else:
-            item.quantity = quantity
-            item.total = item.quantity * item.product.price
-            item.save()
+    if request.user.is_anonymous:
+        customer = None
+        order = Cart.objects.filter(customer=customer)
+        cartItems = CartItems.objects.filter(cart__in=order)
+        for item in cartItems:
+            quantity = request.POST.get('quantity' + str(item.id), 0)
+            if quantity == 0:
+                item.delete()
+            else:
+                item.quantity = quantity
+                item.total = item.quantity * item.product.price
+                item.save()
+    else:    
+        customer = request.user
+        order = Cart.objects.filter(customer=customer)
+        cartItems = CartItems.objects.filter(cart__in=order)
+        for item in cartItems:
+            quantity = request.POST.get('quantity' + str(item.id), 0)
+            if quantity == 0:
+                item.delete()
+            else:
+                item.quantity = quantity
+                item.total = item.quantity * item.product.price
+                item.save()
     return redirect('cart')    
     
+def cart(request, total = 0, quantity=0, itemtotal = 0, context={}):
+    #check if cart is empty 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-def cart(request, total = 0, quantity=0, itemtotal = 0):
-    customer = request.user
-    choice = request.POST.get('choice', None)
-    order = Cart.objects.filter(customer=customer, purchase_complete=False)
-    cartItems = CartItems.objects.filter(cart__in=order)
-    item_count = cartItems.count()
-    # quantity = int(request.POST.get('quantity', 1))
-    for cartItem in cartItems:
-        itemtotal = int(cartItem.quantity * cartItem.product.price)
-    for item in cartItems:
-        total += (int(item.total))
-    # if choice in ['1500']:
-    #       total += 1500
-    # elif choice in ['2500']:
-    #     total += 2500
-    # elif choice in ['3500']:
-    #     total += 3500       
-    # elif choice in ['0']:
-    #     total += 0 
-    context = {
-        'cartItems': cartItems,
-        'item_count': item_count,
-        # 'itemtotal': itemtotal,
-        'total': total,
-        # 'grandTotal': grandTotal
-        
-    }
+    if request.user.is_anonymous:
+        customer = None
+        choice = request.POST.get('choice', None)
+        order = Cart.objects.filter(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart__in=order)
+
+        item_count = cartItems.count()
+
+        if item_count is 0:
+            messages.success(request, 'Your cart is empty')
+        else:
+            cartItems = CartItems.objects.filter(cart__in=order)
+            item_count = cartItems.count()
+            # quantity = int(request.POST.get('quantity', 1))
+            for cartItem in cartItems:
+                itemtotal = int(cartItem.quantity * cartItem.product.price)
+            for item in cartItems:
+                total += (int(item.total))
+            # if choice in ['1500']:
+            #       total += 1500
+            # elif choice in ['2500']:
+            #     total += 2500
+            # elif choice in ['3500']:
+            #     total += 3500       
+            # elif choice in ['0']:
+            #     total += 0 
+            context = {
+                'cartItems': cartItems,
+                'item_count': item_count,
+                # 'itemtotal': itemtotal,
+                'total': total,
+                # 'grandTotal': grandTotal
+                
+            }
+    else:
+        customer = request.user
+        choice = request.POST.get('choice', None)
+        order = Cart.objects.filter(customer=customer, purchase_complete=False)
+        if item_count is 0:
+            messages.success(request, 'Your cart is empty')
+        else:  
+            cartItems = CartItems.objects.filter(cart__in=order)
+            item_count = cartItems.count()
+            # quantity = int(request.POST.get('quantity', 1))
+            for cartItem in cartItems:
+                itemtotal = int(cartItem.quantity * cartItem.product.price)
+            for item in cartItems:
+                total += (int(item.total))
+            # if choice in ['1500']:
+            #       total += 1500
+            # elif choice in ['2500']:
+            #     total += 2500
+            # elif choice in ['3500']:
+            #     total += 3500       
+            # elif choice in ['0']:
+            #     total += 0 
+            context = {
+                'cartItems': cartItems,
+                'item_count': item_count,
+                # 'itemtotal': itemtotal,
+                'total': total,
+                # 'grandTotal': grandTotal
+                
+            }
     return render(request, 'onlinestore/cart.html', context)
 
 def checkout(request, total=0, total_conv=0):
