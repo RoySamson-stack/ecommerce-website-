@@ -363,6 +363,7 @@ def checkout(request, total=0, total_conv=0):
             
         )
         checkout.save()
+        order.clear()
         return render(request, 'onlinestore/checkout.html', context)
     else:
         return redirect('cart')
