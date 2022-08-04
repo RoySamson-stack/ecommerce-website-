@@ -370,24 +370,44 @@ def checkout(request, total=0, total_conv=0):
       
 
 def add_quantity(request, id):
-    customer = request.user
-    product = Product.objects.get(id=id)
-    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
-    orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
-    cart = CartItems.objects.filter(product=product, cart=order)
-    orderItem.quantity += 1
-    orderItem.total = orderItem.quantity * orderItem.product.price
-    orderItem.save()
+    if request.user.is_anonymous:
+        customer = None
+        product = Product.objects.get(id=id)
+        order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+        orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+        cart = CartItems.objects.filter(product=product, cart=order)
+        orderItem.quantity += 1
+        orderItem.total = orderItem.quantity * orderItem.product.price
+        orderItem.save()
+    else: 
+        customer = request.user
+        product = Product.objects.get(id=id)
+        order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+        orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+        cart = CartItems.objects.filter(product=product, cart=order)
+        orderItem.quantity += 1
+        orderItem.total = orderItem.quantity * orderItem.product.price
+        orderItem.save()
     return redirect('cart')
 
 
 def remove_quantity(request, id):
-    customer = request.user
-    product = Product.objects.get(id=id)
-    order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
-    orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
-    cart = CartItems.objects.filter(product=product, cart=order)
-    orderItem.quantity -= 1
-    orderItem.total = orderItem.quantity * orderItem.product.price
-    orderItem.save()
+    if request.user.is_anonymous:
+        customer = None
+        product = Product.objects.get(id=id)
+        order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+        orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+        cart = CartItems.objects.filter(product=product, cart=order)
+        orderItem.quantity -= 1
+        orderItem.total = orderItem.quantity * orderItem.product.price
+        orderItem.save()
+    else:
+        customer = request.user
+        product = Product.objects.get(id=id)
+        order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
+        orderItem, created = CartItems.objects.get_or_create(product=product, cart=order)
+        cart = CartItems.objects.filter(product=product, cart=order)
+        orderItem.quantity -= 1
+        orderItem.total = orderItem.quantity * orderItem.product.price
+        orderItem.save()        
     return redirect('cart')
