@@ -182,13 +182,11 @@ def clear_cart(request):
         customer = None
         order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
         cartItems = CartItems.objects.filter(cart=order)
-        messages.success(request, 'Cart has been cleared')
         cartItems.delete()
     else:
         customer = request.user
         order, created = Cart.objects.get_or_create(customer=customer, purchase_complete=False)
         cartItems = CartItems.objects.filter(cart=order)
-        messages.success(request, 'Cart has been cleared')
         cartItems.delete()
     return redirect('cart')    
 

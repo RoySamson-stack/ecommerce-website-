@@ -130,7 +130,9 @@
                                         {%for product in products%}
                                         <div class="single-recommended-product d-flex mb-30">
                                             <div class="single-recommended-thumb mr-3">
+                                                <a href="{%url 'product_view' product.id%}">
                                                 <img src="{{product.imageUrl}}" alt="">
+                                                </a>
                                             </div>
                                             <div class="single-recommended-desc">
                                                 <h6>{{product.name}}</h6>
