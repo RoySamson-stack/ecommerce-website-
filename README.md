@@ -7,7 +7,9 @@ The website displays the products in a grid view.The user can add products to th
 ## Running the project
 The setup the project in your computer you can download the project from the github repository and run the project by running the following command:
 
-First  install all requirments and dependencies
+First  clone or download the project 
+
+Install all requirments and dependencies to the project path
 
 ```
 pip install -r requirements.txt
