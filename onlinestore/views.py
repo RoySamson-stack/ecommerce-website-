@@ -281,6 +281,9 @@ def cart(request, total = 0, quantity=0, itemtotal = 0, context={}):
         customer = request.user
         choice = request.POST.get('choice', None)
         order = Cart.objects.filter(customer=customer, purchase_complete=False)
+        cartItems = CartItems.objects.filter(cart__in=order)
+        item_count = cartItems.count()
+
         if item_count is 0:
             messages.success(request, 'Your cart is empty')
         else:  
@@ -363,7 +366,7 @@ def checkout(request, total=0, total_conv=0):
             
         )
         checkout.save()
-        order.clear()
+        order.delete()
         return render(request, 'onlinestore/checkout.html', context)
     else:
         return redirect('cart')
