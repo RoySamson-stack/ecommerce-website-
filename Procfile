@@ -1,1 +1,1 @@
-web: npm start
+web: gunicorn yecommerce-webiste.wsgi --log-file -
